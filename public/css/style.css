@@ -1,0 +1,171 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    min-height: 100%;
+    padding: 0;
+}
+
+#main {
+    height: 100%;
+    width: 100%;
+}
+
+nav {
+    float: left;
+    width: 100%;
+}
+
+#map-container {
+    top: 92px;
+    position: relative;
+    width: 100%;
+    height: calc(100% - 92px);
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    background-color: grey;
+    position: absolute;
+    bottom: 0;
+}
+
+#map-buttons {
+    position: absolute;
+    right: 1.75%;
+    top: 0.5%;
+}
+
+  #right-panel {
+    font-family: 'Roboto','sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+    visibility: hidden;
+  }
+
+  #right-panel select, #right-panel input {
+    font-size: 15px;
+  }
+
+  #right-panel select {
+    width: 100%;
+  }
+
+  #right-panel i {
+    font-size: 12px;
+  }
+  #right-panel {
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    right: 5px;
+    top: 15%;
+    margin-top: 0px;
+    height: 70%;
+    width: 30%;
+    padding: 5px;
+    z-index: 5;
+    border: 1px solid #999;
+    background: #fff;
+
+  }
+
+  #places {
+    list-style-type: none;
+    padding: 0;
+    margin:0;
+    height: 93%;
+    width: 100%;
+    overflow-y: scroll;
+  }
+
+  #placeChild {
+    border: none;
+    background-color: #f1f1f1;
+    height: 13%;
+    width: 100%;
+    padding: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-align-content: center;
+    align-content: center;
+  }
+  #placeChild:nth-child(odd) {
+    background-color: #fcfcfc;
+  }
+  #placeChild:hover {
+    border: 2px solid #999;
+  }
+
+
+
+  #close {
+    background-color: #ffffff;
+    border: none;
+    width: 100%;
+    margin: 2% 0 0 0;
+    color: grey;
+    font-size: 15px;
+  } 
+  p{
+    margin: 0;
+  }
+  #name{
+    margin-left: 2%;
+    width: 80%;
+    height:30%;
+    color: black;
+    font-size: 13px;
+    font-weight: 200;
+  }
+  #rating{
+    height:20%;
+    width:30%;
+    font-size: 12px;
+    color:red;
+  }
+  #vicinity{
+    height: 20%;
+    width:70%;
+    font-size: 15px;
+    color blue;
+  }
+  #icon{
+    width: 20px;
+    height: 20px;
+  }
+
+  #right-information {
+    font-family: 'Roboto','sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+    visibility: hidden;
+  }
+  #right-information {
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    right: 5px;
+    top: 15%;
+    margin-top: 0px;
+    height: 70%;
+    width: 30%;
+    padding: 5px;
+    z-index: 5;
+    border: 1px solid #999;
+    background: #fff;
+
+  }
+    #info-close {
+    background-color: #ffffff;
+    border: none;
+    width: 100%;
+    margin: 2% 0 0 0;
+    color: grey;
+    font-size: 15px;
+  } 
+
