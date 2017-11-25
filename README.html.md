@@ -1,7 +1,4 @@
-<style>
-main {font-size: 1.5em;}
-li {margin-bottom: 10px;}
-</style>
+
 <main>
 <h1>Assignment 3</h1>
 <h2>Final Project</h2>
