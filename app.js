@@ -15,7 +15,12 @@ let authenticate = require('./routes/authenticate');
 
 let mongoose    = require('mongoose');
 
-mongoose.connect(config.database); // connect to database
+// Use bluebird
+mongoose.Promise = require('bluebird');
+// connect to database
+let promise = mongoose.connect(config.database, {
+    useMongoClient: true,
+});
 
 
 let app = express();
