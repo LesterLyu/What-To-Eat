@@ -15,7 +15,6 @@ router.post('/', function(req, res, next) {
     newUser.save(function(err) {
         if (err) {
             res.json({ success: false });
-            throw err;
         }
         console.log(newUser + '\nUser saved successfully');
         res.json({ success: true });

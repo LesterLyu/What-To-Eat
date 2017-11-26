@@ -35,7 +35,7 @@ router.post('/', function(req, res, next) {
                 let token = jwt.sign(payload, config.superSecret, {
                     expiresIn: 8640000 // expires in 2400 hours
                 });
-
+                res.cookie('token', token);
                 res.json({
                     success: true,
                     msg: 'Enjoy your token!',

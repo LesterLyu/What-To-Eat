@@ -35,7 +35,7 @@ app.engine('html', require('ejs').renderFile);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(config.superSecret));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
@@ -43,6 +43,46 @@ app.use('/users', users);
 
 app.use('/api/register', register);
 app.use('/api/authenticate', authenticate);
+
+
+// ---------------------------------------------------------
+// route middleware to authenticate and check token
+// ---------------------------------------------------------
+app.use(function(req, res, next) {
+
+    // check header or url parameters or post parameters for token
+    let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.cookies.token;
+    console.log(req);
+
+    // decode token
+    if (token) {
+
+        // verifies secret and checks exp
+        jwt.verify(token, config.superSecret, function(err, decoded) {
+            if (err) {
+                return res.json({ success: false, message: 'Failed to authenticate token.' });
+            } else {
+                // if everything is good, save to request for use in other routes
+                req.decoded = decoded;
+                next();
+            }
+        });
+
+    } else {
+
+        // if there is no token
+        // return an error
+        return res.status(403).send({
+            success: false,
+            message: 'No token provided.'
+        });
+
+    }
+
+});
+
+
+app.use('/api/user', user);
 
 
 // catch 404 and forward to error handler

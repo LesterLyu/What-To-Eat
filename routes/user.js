@@ -7,4 +7,9 @@ router.get('/', function(req, res, next) {
     res.send('Hello ' + req.decoded.username + "!");
 });
 
+router.get('/msg', function(req, res, next) {
+
+    res.send("!!");
+});
+
 module.exports = router;
