@@ -12,7 +12,7 @@ let users = require('./routes/users');
 let user = require('./routes/user');
 let register = require('./routes/register');
 let authenticate = require('./routes/authenticate');
-
+let messages = require('./routes/message');
 let mongoose    = require('mongoose');
 
 // Use bluebird
@@ -37,10 +37,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser(config.superSecret));
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use('/api/messages', messages);
 app.use('/', index);
 app.use('/users', users);
-
 app.use('/api/register', register);
 app.use('/api/authenticate', authenticate);
 
@@ -83,6 +82,7 @@ app.use(function(req, res, next) {
 
 
 app.use('/api/user', user);
+
 
 
 // catch 404 and forward to error handler

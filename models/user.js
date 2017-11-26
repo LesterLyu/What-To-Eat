@@ -8,6 +8,7 @@ let userSchema = new Schema({
     admin:{type: Boolean, required: true},
     likeRestaurantId:[],
     dislikeRestaurantId:[],
+    messages:[]
 });
 
 module.exports = mongo.model('User',userSchema);
