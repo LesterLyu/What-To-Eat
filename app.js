@@ -12,6 +12,9 @@ let users = require('./routes/users');
 let user = require('./routes/user');
 let register = require('./routes/register');
 let authenticate = require('./routes/authenticate');
+let login = require('./routes/login');
+let logout = require('./routes/logout');
+
 
 let mongoose    = require('mongoose');
 
@@ -38,7 +41,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser(config.superSecret));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// testing =======================================
+app.use('/login', login);
+app.use('/logout', logout);
+app.use('/verify', authenticate);
+// ====================================================
+
 app.use('/', index);
+app.get('/signup', function (req, res) {
+    res.render('signup.html');
+});
 app.use('/users', users);
 
 app.use('/api/register', register);
@@ -52,7 +64,7 @@ app.use(function(req, res, next) {
 
     // check header or url parameters or post parameters for token
     let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.cookies.token;
-    console.log(req);
+
 
     // decode token
     if (token) {

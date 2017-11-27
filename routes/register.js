@@ -1,6 +1,9 @@
 let express = require('express');
 let router = express.Router();
+let jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 let User = require('../models/user'); // get our mongoose model
+
+let config = require('../config'); // get our config file
 
 /* GET users listing. */
 router.post('/', function(req, res, next) {
@@ -20,7 +23,8 @@ router.post('/', function(req, res, next) {
             let newUser = new User({
                 username: req.body.username,
                 password: req.body.password,
-                admin: req.body.admin,
+                email: req.body.email,
+                admin: req.body.admin
             });
 
             newUser.save(function(err) {
@@ -28,7 +32,18 @@ router.post('/', function(req, res, next) {
                     res.status(400);
                     res.json({ success: false, msg: err });
                 }
-                res.json({ success: true, msg: "Registration success"});
+                // create a token
+                let payload = {
+                    admin: newUser.admin,
+                    username: newUser.username
+                };
+                let token = jwt.sign(payload, config.superSecret, {
+                    expiresIn: 8640000 // expires in 2400 hours
+                });
+                res.cookie('token', token);
+
+                res.redirect('/');
+                // res.json({ success: true, msg: "Registration success"});
             });
 
         }
