@@ -10,6 +10,7 @@ let config = require('./config'); // get our config file
 let index = require('./routes/index');
 let users = require('./routes/users');
 let user = require('./routes/user');
+let restaurant = require('./routes/restaurant');
 let register = require('./routes/register');
 let authenticate = require('./routes/authenticate');
 let login = require('./routes/login');
@@ -93,7 +94,7 @@ app.use(function(req, res, next) {
 
 });
 
-
+app.use('/api/restaurant', restaurant),
 app.use('/api/user', user);
 
 

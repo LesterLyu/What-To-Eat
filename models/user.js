@@ -8,7 +8,6 @@ let userSchema = new Schema({
     email:{type: String, required: true},
     admin:{type: Boolean, required: true},
     likeRestaurantId:[],
-    dislikeRestaurantId:[],
 });
 
 module.exports = mongo.model('User',userSchema);

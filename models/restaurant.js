@@ -3,12 +3,19 @@ const Schema = mongo.Schema;
 
 
 let restaurantSchema = new Schema({
-
+    place_id: String, //google place id
     name: {type:String},
-    price:{type:Number},
-    img: {type:String},
+    rating: String,
+    address: String, // result.formatted_address
+    geometry: {lat: Number, lng: Number},
+    phone: String,
+    website: String,
+    price:{type:Number}, // $  $$  $$$  $$$$
     url:{type:String},
-    tag:[String], // this is tags
+    vicinity: String, // short address
+    types: [],
+    photos: [],
+    popularity:[], // see ../popular_times/example_calls.js
 });
 
 module.exports = mongo.model('Restaurant',restaurantSchema);
