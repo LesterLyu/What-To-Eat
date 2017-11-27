@@ -7,7 +7,7 @@ let User = require('../models/user'); // get our mongoose model
 /* GET users listing. */
 router.post('/', function(req, res, next) {
 
-    console.log(req.body);
+    console.log("verifying user: " + req.body.username + " password: " + req.body.password);
 
     // find the user
     User.findOne({
@@ -25,7 +25,6 @@ router.post('/', function(req, res, next) {
                 res.status(400);
                 res.json({ success: false, msg: 'Authentication failed. Wrong password.' });
             } else {
-
                 // if user is found and password is right
                 // create a token
                 let payload = {
@@ -36,11 +35,12 @@ router.post('/', function(req, res, next) {
                     expiresIn: 8640000 // expires in 2400 hours
                 });
                 res.cookie('token', token);
-                res.json({
-                    success: true,
-                    msg: 'Enjoy your token!',
-                    token: token
-                });
+                res.redirect('/');
+                // res.json({
+                //     success: true,
+                //     msg: 'Enjoy your token!',
+                //     token: token
+                // });
             }
 
         }

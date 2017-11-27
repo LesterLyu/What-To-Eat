@@ -12,7 +12,7 @@ let users = require('./routes/users');
 let user = require('./routes/user');
 let register = require('./routes/register');
 let authenticate = require('./routes/authenticate');
-let messages = require('./routes/message');
+
 let mongoose    = require('mongoose');
 
 // Use bluebird
@@ -40,6 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+
 app.use('/api/register', register);
 app.use('/api/authenticate', authenticate);
 
@@ -51,6 +52,7 @@ app.use(function(req, res, next) {
 
     // check header or url parameters or post parameters for token
     let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.cookies.token;
+    console.log(req);
 
     // decode token
     if (token) {
@@ -79,9 +81,8 @@ app.use(function(req, res, next) {
 
 });
 
-app.use('/api/messages', messages);
-app.use('/api/user', user);
 
+app.use('/api/user', user);
 
 
 // catch 404 and forward to error handler
