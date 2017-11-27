@@ -37,7 +37,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser(config.superSecret));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/api/messages', messages);
+
 app.use('/', index);
 app.use('/users', users);
 app.use('/api/register', register);
@@ -51,7 +51,6 @@ app.use(function(req, res, next) {
 
     // check header or url parameters or post parameters for token
     let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.cookies.token;
-    console.log(req);
 
     // decode token
     if (token) {
@@ -80,7 +79,7 @@ app.use(function(req, res, next) {
 
 });
 
-
+app.use('/api/messages', messages);
 app.use('/api/user', user);
 
 
