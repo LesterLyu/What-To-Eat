@@ -39,20 +39,26 @@ router.post('/', function(req, res, next) {
         content: req.body.content,
         date: dateString,
     });
-    User.updateMany(
-        {},
-        {$push: {messages: "a"}}
-    );
     newMessage.save(function(err) {
         if (err) {
             res.json({ success: false });
         }
+        User.updateMany(
+            {},
+            {$push: {messages: {msgid: newMessage._id, is_read: false}}},
+            function (err, raw) {
+                if(err)
+                    console.log(err);
+            }
+        );
         console.log(newMessage + '\nnew message posted successfully');
         res.json({ success: true });
     });
+
+
 });
 
 router.delete('/', function (req, res, next) {
 
-})
+});
 module.exports = router;
