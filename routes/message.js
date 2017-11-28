@@ -2,63 +2,62 @@ var express = require('express');
 var router = express.Router();
 let Messages = require('../models/messages');
 let User = require('../models/user');
-
 /* GET messages listing. */
 router.get('/', function(req, res, next) {
     /*res.send('Hi ' + req.decoded.username + ', Here are the unreaded messsages:');*/
-    User.find({username: req.decoded.username, 'messages.isRead': true}, 'messages.messageid', function (err, docs) {
+    let document = [];
+    User.find({username: req.decoded.username, 'messages.is_read': false}, 'messages.msgid', function (err, docs) {
         if (err) {
             res.json({ success: false });
         }
-        var document = new Array();
         docs.forEach(function (element) {
-            Messages.findById(element, 'content', function (err, adventure) {
-                if (err) {
-                    res.json({ success: false });
-                }
-                document.push(adventure);
-            });
+            let itemprocessed = 0;
+            for (let i = 0; i < element.messages.length; i++) {
+                Messages.findById(element.messages[i].msgid, 'content', function (err, adventure) {
+                    if (err) {
+                        res.json({success: false});
+                    }
+                    itemprocessed++;
+                    document.push(adventure);
+                    if(itemprocessed == element.messages.length - 1){
+                        res.json(document);
+                    }
+                })
+            }
         });
-        res.json(document);
     })
-
-
 });
 
 
-/* POST messages listing. */
-router.post('/', function(req, res, next) {
-    // create a sample message
-    let newDate = new Date();
-    let dateString = "";
-    dateString += (newDate.getMonth() + 1) + "/";
-    dateString += newDate.getDate() + "/";
-    dateString += newDate.getFullYear();
-    let newMessage = new Messages({
-        title: req.body.title,
-        content: req.body.content,
-        date: dateString,
-    });
-    newMessage.save(function(err) {
-        if (err) {
-            res.json({ success: false });
+router.delete('/:id', function (req, res, next) {
+    let id = req.params.id;
+    Messages.deleteOne({_id: id}, function (err) {
+        if (err){
+            console.log(err);
         }
         User.updateMany(
             {},
-            {$push: {messages: {msgid: newMessage._id, is_read: false}}},
+            {$pull: {messages: {msgid: id}}},
             function (err, raw) {
                 if(err)
                     console.log(err);
+                console.log(raw);
+                res.json({ success: true });
+                console.log('message with id ' + id + ' deleted successfully');
             }
         );
-        console.log(newMessage + '\nnew message posted successfully');
-        res.json({ success: true });
+
     });
-
-
 });
 
-router.delete('/', function (req, res, next) {
-
+router.put('/:id/readed', function (req, res, next){
+    let id = req.params.id;
+    let usern = req.decoded.username;
+    User.update({username: usern, 'messages.msgid': id}, {$set: {"messages.$.is_read": true}}, function (err, raw) {
+        if(err)
+            console.log(err);
+        console.log(raw);
+        res.json({ success: true });
+    })
 });
 module.exports = router;

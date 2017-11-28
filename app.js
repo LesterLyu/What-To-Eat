@@ -12,9 +12,9 @@ let users = require('./routes/users');
 let user = require('./routes/user');
 let register = require('./routes/register');
 let authenticate = require('./routes/authenticate');
-let messages = require('./routes/message')
+let messages = require('./routes/message');
 let mongoose    = require('mongoose');
-
+let messagespost = require('./routes/messagepost');
 // Use bluebird
 mongoose.Promise = require('bluebird');
 // connect to database
@@ -40,9 +40,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/api/messages', messages)
+app.use('/api/messages', messagespost);
 app.use('/api/register', register);
 app.use('/api/authenticate', authenticate);
+
 
 
 // ---------------------------------------------------------
@@ -83,7 +84,7 @@ app.use(function(req, res, next) {
 
 app.use('/api/user', user);
 
-
+app.use('/api/messages', messages);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     let err = new Error('Not Found');
