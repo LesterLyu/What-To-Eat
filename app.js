@@ -12,6 +12,8 @@ let users = require('./routes/users');
 let user = require('./routes/user');
 let register = require('./routes/register');
 let authenticate = require('./routes/authenticate');
+let login = require('./routes/login');
+let logout = require('./routes/logout');
 let messages = require('./routes/message');
 let mongoose    = require('mongoose');
 let messagespost = require('./routes/messagepost');
@@ -44,6 +46,14 @@ app.use('/api/messages', messagespost);
 app.use('/api/register', register);
 app.use('/api/authenticate', authenticate);
 
+// login logout =======================================
+app.use('/login', login);
+app.use('/logout', logout);
+app.get('/signup', function (req, res) {
+    res.render('signup.html');
+});
+app.use('/verify', authenticate);
+// ====================================================
 
 
 // ---------------------------------------------------------
