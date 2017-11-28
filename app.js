@@ -12,7 +12,7 @@ let users = require('./routes/users');
 let user = require('./routes/user');
 let register = require('./routes/register');
 let authenticate = require('./routes/authenticate');
-
+let messages = require('./routes/message')
 let mongoose    = require('mongoose');
 
 // Use bluebird
@@ -40,7 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-
+app.use('/messages', messages)
 app.use('/api/register', register);
 app.use('/api/authenticate', authenticate);
 

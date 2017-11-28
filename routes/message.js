@@ -40,8 +40,8 @@ router.post('/', function(req, res, next) {
         date: dateString,
     });
     User.updateMany(
-        {},
-        {$set: {messages: "a"}}
+        {username:"lu"},
+        {$push: {messages: "a"}}
     );
     newMessage.save(function(err) {
         if (err) {
