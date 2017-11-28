@@ -40,7 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/messages', messages)
+app.use('/api/messages', messages)
 app.use('/api/register', register);
 app.use('/api/authenticate', authenticate);
 
@@ -52,7 +52,6 @@ app.use(function(req, res, next) {
 
     // check header or url parameters or post parameters for token
     let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.cookies.token;
-    console.log(req);
 
     // decode token
     if (token) {
