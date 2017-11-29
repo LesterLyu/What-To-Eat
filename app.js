@@ -17,8 +17,10 @@ let logout = require('./routes/logout');
 let messages = require('./routes/message');
 let mongoose    = require('mongoose');
 let messagespost = require('./routes/messagepost');
-// Use bluebird
-mongoose.Promise = require('bluebird');
+let restaurant = require('./routes/restaurant');
+
+// Use promise from node.js
+mongoose.Promise = global.Promise;
 // connect to database
 let promise = mongoose.connect(config.database, {
     useMongoClient: true,
@@ -94,6 +96,7 @@ app.use(function(req, res, next) {
 
 app.use('/api/user', user);
 
+app.use('/api/restaurant', restaurant);
 app.use('/api/messages', messages);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,7 +1,7 @@
 let util = require('util');
 let rp = require('request-promise');
 let utf8 = require('utf8');
-let config = require('../config'); // get our config file
+let config = require('../../config'); // get our config file
 
 const radar_url = "https://maps.googleapis.com/maps/api/place/radarsearch/json?location={},{}&radius={}&types={}&key={}";
 const detail_url = "https://maps.googleapis.com/maps/api/place/details/json?placeid=%s&key=%s";
@@ -60,6 +60,7 @@ function processPopularity(popularity) {
 
 /**
  * request information for a place and parse current popularity
+ * this is not from google web service api
  * @param place_identifier: name and address string
  */
 async function get_popularity_by_place_identifier(place_identifier) {
@@ -67,7 +68,6 @@ async function get_popularity_by_place_identifier(place_identifier) {
         "tbm": "map",
         "tch": 1,
         "q": place_identifier,
-
         "pb": "!4m12!1m3!1d4005.9771522653964!2d-122.42072974863942!3d37.8077459796541!2m3!1f0!2f0!3f0!3m2!1i1125!2i976"+
         "!4f13.1!7i20!10b1!12m6!2m3!5m1!6e2!20e3!10b1!16b1!19m3!2m2!1i392!2i106!20m61!2m2!1i203!2i100!3m2!2i4!5b1"+
         "!6m6!1m2!1i86!2i86!1m2!1i408!2i200!7m46!1m3!1e1!2b0!3e3!1m3!1e2!2b1!3e2!1m3!1e2!2b0!3e3!1m3!1e3!2b0!3e3!"+
@@ -95,7 +95,7 @@ async function get_popularity_by_place_identifier(place_identifier) {
 /**
  * sends request to detail to get a search string and uses standard proto buffer to get additional information
  * on the current status of popular times
- * @param place_id
+ * @param place_id google place_id
  * @return json detail
  */
 function get_popularity_by_place_id(place_id) {
@@ -130,7 +130,7 @@ function get_popularity_by_place_id(place_id) {
             return get_popularity_by_place_identifier(place_identifier)
                 .then(function (data) {
                     detail_json.popularity = data;
-                    console.log(detail_json);
+                    //console.log(detail_json);
                     return detail_json;
                 });
         }).then(function(detail_json) {

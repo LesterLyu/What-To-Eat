@@ -1,29 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const crawler = require('../popular_times/crawler');
-let Restaurant = require('../models/restaurant'); // get our mongoose model
+const crawler = require('../controller/google_popular_times/crawler');
+const Restaurant = require('../models/restaurant'); // get our mongoose model
+const places = require('../controller/places');
 
 /* GET restaurant. */
-router.get('/', function(req, res, next) {
-    Restaurant.findOne({
-        place_id: req.query.place_id
-    }, function(err, restaurant) {
-        if (!restaurant || restaurant === "undefined") {
-            crawler.get_popularity_by_place_id(req.query.place_id)
-                .then(function (detail) {
-                    let newRest = new Restaurant(detail);
-                    newRest.save(function(err){
-                        if(err){
-                            res.status(400);
-                            res.json({ success: false, msg: err });
-                        }
-                        res.json(detail);
-                    });
-                });
-        }
-        else {
-            res.json(restaurant);
-        }
-    });
+router.get('/google_place_id', function(req, res, next) {
+    places.getRestaurantByGooglePlaceId(req.query.place_id)
+        .then(content => {
+            if(content.success === false)
+                res.status(400);
+            res.json(content);
+        })
+
 });
 module.exports = router;
