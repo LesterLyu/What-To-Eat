@@ -1,36 +1,173 @@
-const crawler = require('../controller/google_popular_times/crawler');
+const google = require('../controller/google_popular_times/crawler');
 const Restaurant = require('../models/restaurant'); // get our mongoose model
 const yelp = require('./yelp/search');
 const categories = 'restaurants';
+const workloads = {
+    'None': 0,
+    'Up to 15 mins': 1,
+    'Up to 30 mins': 2,
+    'Up to 45 mins': 3,
+    'Up to 60 mins': 4,
+    '???': 5,
+};
 
 /**
- *
+ * Main function
  * @param latitude Number
  * @param longitude Number
  * @param radius in meters
- * @param workload 0 -> None, 1-> Up to 15 mins, 2-> Up to 30 mins,
- *                 3-> Up to 45 mins, 4-> Up to 60 mins, 5 -> above 60min
+ * @param workload None, Up to 15 mins, Up to 30 mins,
+ *                 Up to 45 mins, Up to 60 mins, ???
+ * @param day
+ * @param hour search hour
+ * @param callback
  */
-function doFilter(latitude, longitude, radius, workload) {
+function doFilter(latitude, longitude, radius, workload, day, hour, callback) {
+    let number = 0, hasPopularity = 0;
+    let size = -1;
+    let result = [];
+    let datetime = new Date();
+    if(day == -1) {
+        day = datetime.getDay();
+    }
+    if(hour == -1) {
+        hour = datetime.getHours();
+    }
+
+
     // get all restaurants from yelp api, this will get up to 1000 results
-    return yelp.search(latitude, longitude, categories, radius)
+    yelp.search(latitude, longitude, categories, radius)
         .then(results => {
-            //console.log(results);
+            size = results.length;
+
+            console.log('total number: ' + size);
+            if(size === 0)
+                callback([]);
             results.forEach( item => {
                 //console.log(item);
                 let address = '';
+                // may have order bug!
                 item.location.display_address.forEach(item => {
                     address += item + ', ';
                 });
-                const placeIdentifier = item.name + ' ' + address.substring(0, address.length - 2);
-                console.log(placeIdentifier);
-
-            })
-    });
-
+                const placeIdentifier = item.name + ', ' + address.substring(0, address.length - 2);
+                // find out if our database has the restaurant
+                Restaurant.findOne({
+                    id: item.id
+                }).exec().then(restaurant => {
+                    try{
+                        const temp = restaurant.popularity.length;
+                        if(temp > 0) {
+                            hasPopularity++;
+                            restaurant.toObject();
+                            result.push(restaurant);
+                        }
+                    }
+                    catch (err) {
+                        //console.log("new!");
+                        return google.get_popularity_by_place_identifier(placeIdentifier)
+                            .then(data => {
+                                if(data !== -1)
+                                    hasPopularity++;
+                                saveToDatabase(item, data, result);
+                            });
+                    }
+                }).then(() => {
+                    number++;
+                    if(size === number) {
+                        // finishes
+                        console.log("has Popularity: " + hasPopularity);
+                        processFilter({total_number: size, has_popularity: hasPopularity, result: result},
+                            workload, day, hour, callback);
+                    }
+                });
+            });
+        });
 }
 
-doFilter(43.663627, -79.393928, 400, 1).then();
+function processFilter(data, workload, day, hour, callback) {
+    let result = [];
+    let num = 0, size = data.result.length;
+
+    try {
+        for(let i = 0; i < size; i ++) {
+            let restaurant = data.result[i];
+            num++;
+            if (restaurant.popularity.length === 0 || hour <= 6 || restaurant.popularity[day][1] === null) {
+                continue;
+            }
+            // 0->Sunday, 1->Monday,...
+            let curr_workload = restaurant.popularity[day][1][hour - 6][3];
+
+            if (workloads[curr_workload] < workload) {
+                restaurant.popularity = curr_workload;
+                result.push(restaurant);
+            }
+        }
+        callback({
+            success: true,
+            total_number: data.total_number,
+            has_popularity: data.has_popularity,
+            result_size: result.length,
+            result: result
+        });
+
+    }
+    catch(err) {
+        console.log(err);
+        callback({
+            success: false,
+            msg: err.toString()
+        });
+    }
+}
+
+/**
+ * Replace if id exists
+ * @param item
+ * @param popularity
+ * @param result
+ */
+function saveToDatabase(item, popularity, result) {
+    if(popularity === -1)
+        popularity = [];
+
+    Restaurant.findOne({
+        id: item.id
+    }).exec().then(restaurant => {
+        let newRest = new Restaurant({
+            id: item.id,
+            name: item.name,
+            image_url: item.image_url,
+            url: item.url, // yelp url
+            review_count: item.review_count,
+            categories: item.categories,
+            rating: item.rating,
+            coordinates: item.coordinates,
+            price: item.price, // $  $$  $$$  $$$$
+            address: item.location.display_address,
+            phone: item.display_phone,
+            popularity:popularity,
+        });
+        result.push(newRest);
+        if (!restaurant || restaurant === "undefined") {
+            newRest.save(function (err) {
+                if (err) {
+                    console.log("Cannot save " + item.id);
+                }
+            });
+        }
+        else {
+            Restaurant.findByIdAndUpdate(restaurant._id, newRest, function (err) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+        }
+    });
+}
+
+//doFilter(43.663627, -79.393928, 1000, 1).then();
 
 module.exports = {
     doFilter: doFilter,
@@ -46,7 +183,7 @@ module.exports = {
         }).exec()
             .then(function (restaurant) {
                 if (!restaurant || restaurant === "undefined") {
-                    return crawler.get_popularity_by_place_id(placeId)
+                    return google.get_popularity_by_place_id(placeId)
                         .then(function (detail) {
                             let newRest = new Restaurant(detail);
                             newRest.save(function (err) {
@@ -69,7 +206,7 @@ module.exports = {
         }).exec()
             .then(function (restaurant) {
                 if (!restaurant || restaurant === "undefined") {
-                    return crawler.get_popularity_by_place_identifier(placeIdentifier)
+                    return google.get_popularity_by_place_identifier(placeIdentifier)
                         .then(function (detail) {
                             let newRest = new Restaurant(detail);
                             newRest.save(function (err) {

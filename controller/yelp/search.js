@@ -20,7 +20,7 @@ function yelpBasicSearch(latitude, longitude, categories, radius, offset=0) {
         categories: categories,
         radius: radius,
         limit:50,
-        open_now: true,
+        //open_now: true,
         offset: offset,
     }).then(response => {
         //console.log(response.jsonBody);

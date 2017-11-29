@@ -81,14 +81,22 @@ function get_popularity_by_place_identifier(place_identifier) {
 
     return rp({uri: "https://www.google.ca/search", headers: user_agent, qs: params})
         .then(function (data) {
-            // find json EOF
-            let jend = data.lastIndexOf("}");
-            if(jend >= 0)
-                data = data.substring(0, jend + 1);
-            data = JSON.parse(JSON.parse(data)['d'].substring(4));
-            data = data[0][1][0][14][84][0];
-            //console.log(data);
-            return data;
+            try{
+                // find json EOF
+                let jend = data.lastIndexOf("}");
+                if(jend >= 0)
+                    data = data.substring(0, jend + 1);
+                data = JSON.parse(JSON.parse(data)['d'].substring(4));
+                data = data[0][1][0][14][84][0];
+
+                return data;
+                //console.log(data);
+            }
+            catch(err) {
+                console.error('Cannot get popularity of "' + place_identifier + '"\n' + err);
+                return -1;
+            }
+
         })
 }
 

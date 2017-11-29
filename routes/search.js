@@ -5,12 +5,13 @@ const Restaurant = require('../models/restaurant'); // get our mongoose model
 const places = require('../controller/places');
 
 /* GET restaurant. */
-router.get('/google_place_id', function(req, res, next) {
-    places.getRestaurantByGooglePlaceId(req.query.place_id)
-        .then(content => {
-            if(content.success === false)
+router.get('/', function(req, res, next) {
+
+    places.doFilter(req.query.latitude, req.query.longitude, req.query.radius, req.query.workload,
+        req.query.day, req.query.hour, function (result) {
+            if(!result.success)
                 res.status(400);
-            res.json(content);
+            res.json(result);
         })
 
 });

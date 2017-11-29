@@ -1,20 +1,24 @@
 const mongo = require('mongoose');
 const Schema = mongo.Schema;
 
-
+// yelp
 let restaurantSchema = new Schema({
-    place_id: String, //google place id
+    id: String,
     name: {type:String},
+    image_url: String,
+    url: String, // yelp url
+    review_count: Number,
+    categories: [],
     rating: String,
-    address: String, // result.formatted_address
-    geometry: {lat: Number, lng: Number},
-    phone: String,
-    website: String,
-    price:{type:Number}, // $  $$  $$$  $$$$
-    url:{type:String},
-    vicinity: String, // short address
-    types: [],
-    photos: [],
+    coordinates: {
+        latitude: Number,
+        longitude: Number
+    },
+    price:{type:String}, // $  $$  $$$  $$$$
+
+    address: [], // location.display_address
+    phone: String, // display_phone
+
     popularity:[], // see ../popular_times/example_calls.js
 });
 
