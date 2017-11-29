@@ -44,7 +44,13 @@ function doFilter(latitude, longitude, radius, workload, day, hour, callback) {
 
             console.log('total number: ' + size);
             if(size === 0)
-                callback([]);
+                callback({
+                    success: true,
+                    total_number: number,
+                    has_popularity: hasPopularity,
+                    result_size: 0,
+                    result: []
+                });
             results.forEach( item => {
                 //console.log(item);
                 let address = '';

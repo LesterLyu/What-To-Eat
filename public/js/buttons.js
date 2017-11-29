@@ -12,10 +12,10 @@ $('#filter-popover').popover({
         $.getJSON( 'api/search', {
             latitude: targetlocation.lat,
             longitude: targetlocation.lng,
-            radius: $("#radius").val(),
-            workload: $("#workload").val(),
-            day: $("#day").val(),
-            hour: $("#hour").val(),
+            radius: $(".popover-content #radius.form-control").val(),
+            workload: $(".popover-content #workload.form-control").val(),
+            day: $(".popover-content #day.form-control").val(),
+            hour: $(".popover-content #hour.form-control").val(),
         }) .done(function( data ) {
             console.log(data);
             $(".loading").hide();

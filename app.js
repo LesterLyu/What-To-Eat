@@ -56,7 +56,7 @@ app.get('/signup', function (req, res) {
 });
 app.use('/verify', authenticate);
 // ====================================================
-
+app.use('/api/search', search);
 
 // ---------------------------------------------------------
 // route middleware to authenticate and check token
@@ -96,7 +96,7 @@ app.use(function(req, res, next) {
 
 app.use('/api/user', user);
 
-app.use('/api/search', search);
+
 app.use('/api/messages', messages);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
