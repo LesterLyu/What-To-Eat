@@ -10,6 +10,13 @@ router.post('/', function(req, res, next) {
 
     console.log(req.body);
 
+    if(!req.body.username || req.body.username === 'undefined') {
+        res.status(400);
+        res.json({ success: false, msg: "Username?" });
+        return;
+    }
+
+
     // check existence
     User.findOne({
         username: req.body.username
@@ -17,6 +24,7 @@ router.post('/', function(req, res, next) {
         if (user) {
             res.status(400);
             res.json({ success: false, msg: "User exists" });
+
         }
         else{
             // create a sample user

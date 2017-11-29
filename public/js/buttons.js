@@ -28,6 +28,33 @@ $('#filter-popover').popover({
     });
 });
 
+setInterval(function() {
+    $.getJSON( 'api/messages', {
+    }).done(function( data ) {
+        console.log(data);
+        $(".loading").hide();
+        $('#right-panel').show();
+        processSearch(data);
+
+    });
+
+}, 5000);
+
+$("#test").click(function showAlert() {
+    console.log('open alert');
+    let alertType = 'alert-info';
+
+    let message = 'efewfrgrgreg';
+
+    let htmlAlert = '<div class="alert col-sm-9 col-md-6 col-lg-4 '+ alertType +'"><h3>'+ 'New Message: ' + '</h3><BR><p>'+ message +'</p></div>';
+
+
+    $(".alert-message").prepend(htmlAlert);
+    $(".alert-message .alert").first().hide().fadeIn(200).delay(5000).fadeOut(1000, function () { $(this).remove(); });
+});
+
+
+
 let datetime = new Date();
 console.log('set date=' + datetime.getDay());
 $("#day").val(datetime.getDay());

@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
                     }
                     itemprocessed++;
                     document.push(adventure);
-                    if(itemprocessed == element.messages.length - 1){
+                    if(itemprocessed === element.messages.length - 1){
                         res.json(document);
                     }
                 })
