@@ -22,11 +22,7 @@ $('#filter-popover').popover({
 
         });
         $('#filter-popover').popover('hide');
-        $('#right-panel').popover('show');
-        //
-        // let placesPanel = document.getElementById('right-panel');
-        // placesPanel.style.visibility="visible";
-
+        //$('#right-panel').show();
     });
 });
 

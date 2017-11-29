@@ -206,7 +206,7 @@ function centerMarker(marker){
 
 function placeDetail(placeId){
     for (var i = 0; i < markers.length; i++) {
-        console.log(markers[i].get("place_id") + "=?" + placeId);
+        //console.log(markers[i].get("place_id") + "=?" + placeId);
         if(markers[i].get("place_id") == placeId){
             centerMarker(markers[i]);
             popupDetail(placeId);
