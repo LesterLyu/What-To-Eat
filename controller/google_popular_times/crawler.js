@@ -63,7 +63,7 @@ function processPopularity(popularity) {
  * this is not from google web service api
  * @param place_identifier: name and address string
  */
-async function get_popularity_by_place_identifier(place_identifier) {
+function get_popularity_by_place_identifier(place_identifier) {
     params = {
         "tbm": "map",
         "tch": 1,
