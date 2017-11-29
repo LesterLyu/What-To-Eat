@@ -1,42 +1,39 @@
 
-
 // popovers
-var popupElement = "<div class=\"form-group\">\n" +
-    "                    <label for=\"exampleInputEmail1\">How many time you have?</label>\n" +
-    "                    <input type=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"timeHelp\" placeholder=\"Enter time in minutes\">\n" +
-    "                </div>" + "<div class=\"form-group\">\n" +
-    "    <label for=\"exampleSelect1\">Acceptable Workload</label>\n" +
-    "    <select class=\"form-control\" id=\"exampleSelect2\">\n" +
-    "      <option>not busy</option>\n" +
-    "      <option>not too busy</option>\n" +
-    "      <option>a little busy</option>\n" +
-    "      <option>as busy as it gets</option>\n" +
-    "    </select>\n" +
-    "  </div>";
 $('#filter-popover').popover({
     animation: true,
-    content: popupElement,
+    content: $("#popover-content").html(),
     html: true
+}).on('click', function () {
+    $(".btn-info").click(function(){
+        deleteMarkers();
+        let targetlocation = myLocation.getPosition();
+        $.getJSON( 'api/search', {
+            latitude: targetlocation.lat,
+            longitude: targetlocation.lng,
+            radius: $("#radius").val(),
+            workload: $("#workload").val(),
+            day: $("#day").val(),
+            hour: $("#hour").val(),
+        }) .done(function( data ) {
+            console.log(data);
+            processSearch(data);
+
+        });
+        $('#filter-popover').popover('hide');
+
+        let placesPanel = document.getElementById('right-panel');
+        placesPanel.style.visibility="visible";
+
+    });
 });
+
+let datetime = new Date();
+console.log('set date=' + datetime.getDay());
+$("#day").val(datetime.getDay());
 
 //search all restaurants near this location
-$("#search").click(function(){
-    deleteMarkers();
-    var targetlocation = myLocation.getPosition();
-    //console.log(targetlocation);
 
-    service.nearbySearch({
-        location: targetlocation,
-        radius: '1000',
-        type: ['restaurant'],
-        pagetoken:''
-    }, callback);
-
-
-    var placesPanel = document.getElementById('right-panel');
-    placesPanel.style.visibility="visible";
-
-});
 
 
 $("#close").click(function(){

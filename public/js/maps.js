@@ -4,6 +4,7 @@ var markers = [];
 var service;
 var current_map;
 var infowindow;
+let places = [];
 
 
 /**
@@ -128,6 +129,32 @@ function callback(results, status) {
     }
 }
 
+function processSearch(data) {
+    for (let i = 0; i < data.result.length; i++) {
+        createMarker2(data.result[i]);
+    }
+    places = data.result;
+    createLists(data.result);
+}
+
+function createMarker2(place) {
+    var marker = new google.maps.Marker({
+        map: current_map,
+        position: {
+            lat: place.coordinates.latitude,
+            lng: place.coordinates.longitude,
+        }
+    });
+    marker.set("place_id", place.id);
+    marker.set("place_name", place.name);
+    markers.push(marker);
+    google.maps.event.addListener(marker, 'click', function() {
+        infowindow.setContent(place.name);
+        infowindow.open(current_map, this);
+    });
+}
+
+
 function createLists(places){
     var placesList = document.getElementById('places');
     placesList.innerHTML = '';
@@ -135,7 +162,7 @@ function createLists(places){
         var place = places[i];
         var newli = createListItem(place);
         placesList.appendChild(newli);
-    
+
     }
 }
 
@@ -146,7 +173,7 @@ function createListItem(place){
 
     var img = document.createElement('img');
     img.setAttribute("id", "icon");
-    img.src = place.icon;
+    img.src = place.image_url;
     newli.appendChild(img);
 
     var name = document.createElement('h6');
@@ -161,10 +188,11 @@ function createListItem(place){
 
     var vin = document.createElement('p');
     vin.setAttribute("id", "vicinity");
-    vin.innerHTML = "Address:" + place.vicinity;
+    vin.innerHTML = "Address:" + place.address[0];
     newli.appendChild(vin);
-    newli.setAttribute("class","list-group-item")
-    newli.setAttribute("onclick","placeDetail(\""+place.place_id+"\");");
+    newli.setAttribute("class","list-group-item");
+    //newli.setAttribute("onclick","placeDetail(\""+place+"\");");
+    newli.setAttribute("onclick","placeDetail(\""+place.id+"\");");
     return newli;
 }
 
@@ -178,48 +206,48 @@ function centerMarker(marker){
 
 function placeDetail(placeId){
     for (var i = 0; i < markers.length; i++) {
-        console.log(markers[i].get("place_id"));
+        console.log(markers[i].get("place_id") + "=?" + placeId);
         if(markers[i].get("place_id") == placeId){
             centerMarker(markers[i]);
+            popupDetail(placeId);
         }
     }
 
-
-
-    service.getDetails({
-        placeId: placeId
-        }, popupDetail);
 }
 
-function popupDetail(place,status){
-        closePanel()
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-            document.getElementById('info-name').innerHTML = place.name;
-            document.getElementById('info-address').innerHTML = place.formatted_address;
-            var photourl = place.photos[0].getUrl({'maxWidth':500, 'maxHeight': 500});
-            document.getElementById('info-pic').setAttribute("src",photourl);
-            document.getElementById('info-phone').innerHTML = "Phone:" + place.formatted_phone_number;
-            document.getElementById('info-website').setAttribute("onclick"," window.open(\""+place.website+"\");");
-
-            if(place.opening_hours == null){
-                document.getElementById('info-opening').setAttribute("class","btn btn-outline-secondary");            
-                document.getElementById('info-opening').innerHTML = "NO HOURS";
-            }else if(place.opening_hours.open_now){
-                document.getElementById('info-opening').innerHTML = "OPENING";
-                document.getElementById('info-opening').setAttribute("class","btn btn-outline-success");
-            }else{
-                document.getElementById('info-opening').setAttribute("class","btn btn-outline-danger");            
-                document.getElementById('info-opening').innerHTML = "CLOSED";
-            }
-
-
-            document.getElementById('right-information').style.visibility = "visible";
-
-
-
-
-        }
+function popupDetail(placeId){
+    let place;
+    for(let i = 0; i < places.length; i++) {
+        if(places[i].id === placeId)
+            place = places[i];
     }
+    closePanel();
+    console.log('open');
+    document.getElementById('info-name').innerHTML = place.name;
+    document.getElementById('info-address').innerHTML = place.address[0];
+    document.getElementById('info-pic').setAttribute("src",place.image_url);
+    document.getElementById('info-phone').innerHTML = "Phone:" + place.phone;
+    document.getElementById('info-website').setAttribute("onclick"," window.open(\""+place.url+"\");");
+
+    // if(place.opening_hours == null){
+    //     document.getElementById('info-opening').setAttribute("class","btn btn-outline-secondary");
+    //     document.getElementById('info-opening').innerHTML = "NO HOURS";
+    // }else if(place.opening_hours.open_now){
+    //     document.getElementById('info-opening').innerHTML = "OPENING";
+    //     document.getElementById('info-opening').setAttribute("class","btn btn-outline-success");
+    // }else{
+    //     document.getElementById('info-opening').setAttribute("class","btn btn-outline-danger");
+    //     document.getElementById('info-opening').innerHTML = "CLOSED";
+    // }
+
+
+    document.getElementById('right-information').style.visibility = "visible";
+
+
+
+
+
+}
 
 
 function closePanel(){

@@ -8,7 +8,9 @@ const workloads = {
     'Up to 30 mins': 2,
     'Up to 45 mins': 3,
     'Up to 60 mins': 4,
-    '???': 5,
+    'Up to 75 mins': 5,
+    'Up to 90 mins': 6,
+    'Up to 105 mins': 7,
 };
 
 /**
@@ -93,13 +95,14 @@ function processFilter(data, workload, day, hour, callback) {
         for(let i = 0; i < size; i ++) {
             let restaurant = data.result[i];
             num++;
-            if (restaurant.popularity.length === 0 || hour <= 6 || restaurant.popularity[day][1] === null) {
+            if (restaurant.popularity.length === 0 || hour <= 6 || restaurant.popularity[day][1] === null
+                || !restaurant.popularity[day][1][hour - 6]) {
                 continue;
             }
             // 0->Sunday, 1->Monday,...
             let curr_workload = restaurant.popularity[day][1][hour - 6][3];
 
-            if (workloads[curr_workload] < workload) {
+            if (workloads[curr_workload] <= workload) {
                 restaurant.popularity = curr_workload;
                 result.push(restaurant);
             }
