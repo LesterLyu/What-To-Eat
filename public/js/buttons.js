@@ -5,7 +5,7 @@ $('#filter-popover').popover({
     content: $("#popover-content").html(),
     html: true
 }).on('click', function () {
-    $(".btn-info").click(function(){
+    $("#search.btn.btn-info").click(function(){
         deleteMarkers();
         let targetlocation = myLocation.getPosition();
         $.getJSON( 'api/search', {
@@ -17,13 +17,15 @@ $('#filter-popover').popover({
             hour: $("#hour").val(),
         }) .done(function( data ) {
             console.log(data);
+            $('#right-panel').show();
             processSearch(data);
 
         });
         $('#filter-popover').popover('hide');
-
-        let placesPanel = document.getElementById('right-panel');
-        placesPanel.style.visibility="visible";
+        $('#right-panel').popover('show');
+        //
+        // let placesPanel = document.getElementById('right-panel');
+        // placesPanel.style.visibility="visible";
 
     });
 });
@@ -37,18 +39,17 @@ $("#day").val(datetime.getDay());
 
 
 $("#close").click(function(){
-    var placesList = document.getElementById('places');
-    placesList.innerHTML = '';
-    var placesPanel = document.getElementById('right-panel');
-    placesPanel.style.visibility="hidden";
+    $('#right-panel').hide();
 
 });
 
 $("#info-close").click(function(){
-    var placesPanel = document.getElementById('right-information');
-    placesPanel.style.visibility="hidden";
-    var placesPanel = document.getElementById('right-panel');
-    placesPanel.style.visibility="visible";
+    // var placesPanel = document.getElementById('right-information');
+    // placesPanel.style.visibility="hidden";
+    // var placesPanel = document.getElementById('right-panel');
+    // placesPanel.style.visibility="visible";
+    $('#right-information').hide();
+    $('#right-panel').show();
 
 
 });

@@ -40,7 +40,7 @@ nav {
     font-family: 'Roboto','sans-serif';
     line-height: 30px;
     padding-left: 10px;
-    visibility: hidden;
+
 }
 
 #right-panel select, #right-panel input {
@@ -55,11 +55,12 @@ nav {
     font-size: 12px;
 }
 #right-panel {
+    display: none;
     font-family: Arial, Helvetica, sans-serif;
     position: absolute;
     right: 5px;
     top: 15%;
-    margin-top: 0px;
+    margin-top: 0;
     height: 70%;
     width: 30%;
     padding: 5px;
@@ -141,10 +142,10 @@ p{
 }
 
 #right-information {
+    display: none;
     font-family: 'Roboto','sans-serif';
     line-height: 30px;
     padding-left: 10px;
-    visibility: hidden;
     position: absolute;
     right: 5px;
     top: 15%;

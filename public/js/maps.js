@@ -241,8 +241,7 @@ function popupDetail(placeId){
     // }
 
 
-    document.getElementById('right-information').style.visibility = "visible";
-
+    $('#right-information').show();
 
 
 
@@ -251,8 +250,7 @@ function popupDetail(placeId){
 
 
 function closePanel(){
-    var placesPanel = document.getElementById('right-panel');
-    placesPanel.style.visibility="hidden";
+    $('#right-panel').hide();
 }
 
 function createMarker(place) {
