@@ -32,9 +32,6 @@ setInterval(function() {
     $.getJSON( 'api/messages', {
     }).done(function( data ) {
         console.log(data);
-        $(".loading").hide();
-        $('#right-panel').show();
-        processSearch(data);
 
     });
 
