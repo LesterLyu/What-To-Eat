@@ -6,6 +6,7 @@ $('#filter-popover').popover({
     html: true
 }).on('click', function () {
     $("#search.btn.btn-info").click(function(){
+        $(".loading").show();
         deleteMarkers();
         let targetlocation = myLocation.getPosition();
         $.getJSON( 'api/search', {
@@ -17,6 +18,7 @@ $('#filter-popover').popover({
             hour: $("#hour").val(),
         }) .done(function( data ) {
             console.log(data);
+            $(".loading").hide();
             $('#right-panel').show();
             processSearch(data);
 
