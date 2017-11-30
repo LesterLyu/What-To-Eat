@@ -32,22 +32,34 @@ setInterval(function() {
     $.getJSON( 'api/messages', {
     }).done(function( data ) {
         console.log(data);
+        for(let i = 0; i < data.result.length; i++) {
+            showAlert(data.result[i].content);
+            $.ajax({
+                url: 'api/messages/' + data.result[i]._id + '/readed',
+                method: 'PUT'
+            }).done(function( data ) {
+                console.log(data);
+            });
+        }
+
 
     });
 
 }, 5000);
 
-$("#test").click(function showAlert() {
-    console.log('open alert');
+function showAlert(message) {
     let alertType = 'alert-info';
-
-    let message = 'efewfrgrgreg';
-
     let htmlAlert = '<div class="alert col-sm-9 col-md-6 col-lg-4 '+ alertType +'"><h3>'+ 'New Message: ' + '</h3><BR><p>'+ message +'</p></div>';
 
 
     $(".alert-message").prepend(htmlAlert);
     $(".alert-message .alert").first().hide().fadeIn(200).delay(5000).fadeOut(1000, function () { $(this).remove(); });
+}
+
+$("#test").click(function showAlert() {
+    console.log('open alert');
+    let message = 'efewfrgrgreg';
+    showAlert(message);
 });
 
 
