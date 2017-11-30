@@ -18,6 +18,7 @@ let messages = require('./routes/message');
 let mongoose    = require('mongoose');
 let messagespost = require('./routes/messagepost');
 let search = require('./routes/search');
+let editprofile = require('./routes/editprofile');
 
 // Use promise from node.js
 mongoose.Promise = require('bluebird');
@@ -48,6 +49,7 @@ app.use('/api/messages', messagespost);
 app.use('/api/register', register);
 app.use('/api/authenticate', authenticate);
 
+
 // login logout =======================================
 app.use('/login', login);
 app.use('/logout', logout);
@@ -57,6 +59,7 @@ app.get('/signup', function (req, res) {
 app.use('/verify', authenticate);
 // ====================================================
 app.use('/api/search', search);
+
 
 // ---------------------------------------------------------
 // route middleware to authenticate and check token
@@ -96,6 +99,8 @@ app.use(function(req, res, next) {
 
 app.use('/api/user', user);
 
+// edit profile =======================================
+app.use('/api/editprofile', editprofile);
 
 app.use('/api/messages', messages);
 // catch 404 and forward to error handler

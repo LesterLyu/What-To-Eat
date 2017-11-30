@@ -1,20 +1,13 @@
-/*  ======== User login =================  */
-function signUp(){
-    var email = $("#emailText").val();
+function edit(){
     var username = $("#usernameText").val();
-    var password = $("#passwordText").val();
-    var admin = "false";
+    console.log("Edited username is: "+username);
 
     var data = {
-        "email": email,
-        "username": username,
-        "password": password,
-        "admin": admin
+      "username": username
     };
-
     $.ajax({
-        url:"/api/register",
-        type:"POST",
+        url: "/api/editprofile",
+        type: "POST",
         dataType:"text",
         contentType:"application/json; charset=utf-8",
         data: JSON.stringify(data),
