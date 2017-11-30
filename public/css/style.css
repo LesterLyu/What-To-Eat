@@ -204,6 +204,18 @@ p{
     animation: spin 2s linear infinite;
 }
 
+#loading-text-container {
+    position: relative;
+    margin: -75px 0 0 -75px;
+    left: calc(50% + 45px);
+    top: calc(50% + 160px);
+}
+
+#loading-text {
+    position: relative;
+    color: white;
+}
+
 @-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }
     100% { -webkit-transform: rotate(360deg); }

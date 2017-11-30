@@ -1,4 +1,5 @@
 
+
 // popovers
 $('#filter-popover').popover({
     animation: true,
@@ -9,6 +10,17 @@ $('#filter-popover').popover({
         $(".loading").show();
         deleteMarkers();
         let targetlocation = myLocation.getPosition();
+        $('#filter-popover').popover('hide');
+
+        let fn = setInterval(function() {
+            $.getJSON( 'api/search/status', {
+            }).done(function( data ) {
+                if(data.size !== -1) {
+                    $('#loading-text').html((data.curr / data.size * 100).toFixed(0) + '%');
+                }
+            });
+        }, 300);
+
         $.getJSON( 'api/search', {
             latitude: targetlocation.lat,
             longitude: targetlocation.lng,
@@ -18,13 +30,16 @@ $('#filter-popover').popover({
             hour: $(".popover-content #hour.form-control").val(),
         }) .done(function( data ) {
             //console.log(data);
+            clearInterval(fn);
+            $('#loading-text').html('0%');
             $(".loading").hide();
             $('#right-panel').show();
             processSearch(data);
-
         });
-        $('#filter-popover').popover('hide');
-        //$('#right-panel').show();
+
+
+
+
     });
 });
 
@@ -41,10 +56,7 @@ setInterval(function() {
                 //console.log(data);
             });
         }
-
-
     });
-
 }, 5000);
 
 function showAlert(message) {

@@ -15,4 +15,10 @@ router.get('/', function(req, res, next) {
         })
 
 });
+
+/* GET status. */
+router.get('/status', function(req, res, next) {
+    res.json(places.getStatus());
+
+});
 module.exports = router;

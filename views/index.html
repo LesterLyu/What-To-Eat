@@ -44,12 +44,13 @@
             </ul>
             <ul class="nav navbar-nav ml-auto">
                 <% if(curUsername) {%>
-                <li id="profile-dropdown" class="nav-item dropdown">
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i style="display: inline-flex;vertical-align: middle;" class="material-icons">account_circle</i><%=' ' + curUsername %>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profileModal">Edit Profile</a>
+                        <a class="dropdown-item" href="#">Messages</a>
                         <a class="dropdown-item" href="#">Delete Account</a>
                     </div>
                 </li>
@@ -199,6 +200,10 @@
     <!-- Loader -->
     <div class="loading" style="display: none;">
         <div id="loader" class="loader"></div>
+        <div id="loading-text-container" class="container">
+            <h4 id="loading-text">0%</h4>
+        </div>
+
     </div>
 
 

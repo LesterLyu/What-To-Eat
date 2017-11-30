@@ -12,6 +12,14 @@ const workloads = {
     'Up to 90 mins': 6,
     'Up to 105 mins': 7,
 };
+const STATUS = ['Gathering data from Yelp...',
+                'Gathering data from Google...'];
+
+let size = -1, number = 0, step = 0;
+
+function getStatus() {
+    return {size: size, curr: number, msg: STATUS[step]};
+}
 
 /**
  * Main function
@@ -25,8 +33,10 @@ const workloads = {
  * @param callback
  */
 function doFilter(latitude, longitude, radius, workload, day, hour, callback) {
-    let number = 0, hasPopularity = 0;
-    let size = -1;
+    let hasPopularity = 0;
+    number = 0;
+    size = -1;
+    step = 0;
     let result = [];
     let datetime = new Date();
     if(day == -1) {
@@ -36,12 +46,11 @@ function doFilter(latitude, longitude, radius, workload, day, hour, callback) {
         hour = datetime.getHours();
     }
 
-
     // get all restaurants from yelp api, this will get up to 1000 results
     yelp.search(latitude, longitude, categories, radius)
         .then(results => {
             size = results.length;
-
+            step++;
             console.log('total number: ' + size);
             if(size === 0)
                 callback({
@@ -179,6 +188,7 @@ function saveToDatabase(item, popularity, result) {
 //doFilter(43.663627, -79.393928, 1000, 1).then();
 
 module.exports = {
+    getStatus: getStatus,
     doFilter: doFilter,
 
     /**
