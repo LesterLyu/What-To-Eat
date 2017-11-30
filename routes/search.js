@@ -8,7 +8,8 @@ const places = require('../controller/places');
 router.get('/', function(req, res, next) {
 
     places.doFilter(req.query.latitude, req.query.longitude, req.query.radius, req.query.workload,
-        req.query.day, req.query.hour, function (result) {
+        req.query.day, req.query.hour, req.sessionID, function (result) {
+            delete places.sessions[req.sessionID];
             if(!result.success)
                 res.status(400);
             res.json(result);
@@ -18,7 +19,7 @@ router.get('/', function(req, res, next) {
 
 /* GET status. */
 router.get('/status', function(req, res, next) {
-    res.json(places.getStatus());
+    res.json(places.getStatus(req.sessionID));
 
 });
 module.exports = router;

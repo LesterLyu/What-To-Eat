@@ -5,6 +5,7 @@ let logger = require('morgan');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
 let jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
+const session = require('express-session');
 
 let config = require('./config'); // get our config file
 let index = require('./routes/index');
@@ -29,6 +30,12 @@ let promise = mongoose.connect(config.database, {
 
 
 let app = express();
+
+app.use(session({
+    secret: config.superSecret,
+    resave: false,
+    saveUninitialized: true,
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

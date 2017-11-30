@@ -13,13 +13,21 @@ const workloads = {
     'Up to 105 mins': 7,
 };
 const STATUS = ['Gathering data from Yelp...',
-                'Gathering data from Google...'];
+                'Gathering data from Google...',
+                'Not running...'];
 
-let size = -1, number = 0, step = 0;
+let sessions = {};
 
-function getStatus() {
-    return {size: size, curr: number, msg: STATUS[step]};
+function getStatus(sessionID) {
+    if (sessions[sessionID])
+        return {
+            size: sessions[sessionID].size,
+            curr: sessions[sessionID].number,
+            msg: STATUS[sessions[sessionID].step]
+        };
+    return {msg: STATUS[2]};
 }
+
 
 /**
  * Main function
@@ -31,12 +39,16 @@ function getStatus() {
  * @param day
  * @param hour search hour
  * @param callback
+ * @param sessionID
  */
-function doFilter(latitude, longitude, radius, workload, day, hour, callback) {
+function doFilter(latitude, longitude, radius, workload, day, hour, sessionID, callback) {
     let hasPopularity = 0;
-    number = 0;
-    size = -1;
-    step = 0;
+    sessions[sessionID] = {
+        number: 0,
+        size: -1,
+        step: 0,
+    };
+
     let result = [];
     let datetime = new Date();
     if(day == -1) {
@@ -49,13 +61,13 @@ function doFilter(latitude, longitude, radius, workload, day, hour, callback) {
     // get all restaurants from yelp api, this will get up to 1000 results
     yelp.search(latitude, longitude, categories, radius)
         .then(results => {
-            size = results.length;
-            step++;
-            console.log('total number: ' + size);
-            if(size === 0)
+            sessions[sessionID].size = results.length;
+            sessions[sessionID].step++;
+            console.log('total number: ' + sessions[sessionID].size);
+            if(sessions[sessionID].size === 0)
                 callback({
                     success: true,
-                    total_number: number,
+                    total_number: sessions[sessionID].number,
                     has_popularity: hasPopularity,
                     result_size: 0,
                     result: []
@@ -90,11 +102,11 @@ function doFilter(latitude, longitude, radius, workload, day, hour, callback) {
                             });
                     }
                 }).then(() => {
-                    number++;
-                    if(size === number) {
+                    sessions[sessionID].number++;
+                    if(sessions[sessionID].size === sessions[sessionID].number) {
                         // finishes
                         console.log("has Popularity: " + hasPopularity);
-                        processFilter({total_number: size, has_popularity: hasPopularity, result: result},
+                        processFilter({total_number: sessions[sessionID].size, has_popularity: hasPopularity, result: result},
                             workload, day, hour, callback);
                     }
                 });
@@ -188,6 +200,7 @@ function saveToDatabase(item, popularity, result) {
 //doFilter(43.663627, -79.393928, 1000, 1).then();
 
 module.exports = {
+    sessions: sessions,
     getStatus: getStatus,
     doFilter: doFilter,
 
