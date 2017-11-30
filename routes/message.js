@@ -15,7 +15,6 @@ router.get('/', function(req, res, next) {
         if(docs.length === 0) {
             res.json({success: true, result: []});
         }
-        console.log(docs.toString());
 
         let promises = [];
         for(let i = 0; i < docs.length; i++) {
@@ -25,7 +24,6 @@ router.get('/', function(req, res, next) {
                         if (err) {
                             res.json({success: false});
                         }
-                        console.log(data);
                         document.push(data);
                     }).exec()
                 );
@@ -66,7 +64,6 @@ router.put('/:id/readed', function (req, res, next){
     User.update({username: usern, 'messages.msgid': id}, {$set: {"messages.$.is_read": true}}, function (err, raw) {
         if(err)
             console.log(err);
-        console.log(raw);
         res.json({ success: true });
     })
 });
