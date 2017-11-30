@@ -3,19 +3,19 @@ function edit(){
     console.log("Edited username is: "+username);
 
     var data = {
-      "username": username
+        "username": username
     };
     $.ajax({
         url: "/api/editprofile",
-        type: "POST",
-        dataType:"text",
+        method: "POST",
         contentType:"application/json; charset=utf-8",
         data: JSON.stringify(data),
-        success: function(response){
-            window.location='/';
-            $("html").html(response);
-        }, error: function (xhr){
-            alert(xhr.responseText);
+    }).done(function (data) {
+        if(data.success) {
+            location.reload();
+        }
+        else {
+            showModalAlert('Modify profile' ,data.msg);
         }
     });
 }

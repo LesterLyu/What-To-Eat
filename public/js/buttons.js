@@ -17,7 +17,7 @@ $('#filter-popover').popover({
             day: $(".popover-content #day.form-control").val(),
             hour: $(".popover-content #hour.form-control").val(),
         }) .done(function( data ) {
-            console.log(data);
+            //console.log(data);
             $(".loading").hide();
             $('#right-panel').show();
             processSearch(data);
@@ -31,14 +31,14 @@ $('#filter-popover').popover({
 setInterval(function() {
     $.getJSON( 'api/messages', {
     }).done(function( data ) {
-        console.log(data);
+        //console.log(data);
         for(let i = 0; i < data.result.length; i++) {
             showAlert(data.result[i].content);
             $.ajax({
                 url: 'api/messages/' + data.result[i]._id + '/readed',
                 method: 'PUT'
             }).done(function( data ) {
-                console.log(data);
+                //console.log(data);
             });
         }
 
@@ -50,8 +50,6 @@ setInterval(function() {
 function showAlert(message) {
     let alertType = 'alert-info';
     let htmlAlert = '<div class="alert col-sm-9 col-md-6 col-lg-4 '+ alertType +'"><h3>'+ 'New Message: ' + '</h3><BR><p>'+ message +'</p></div>';
-
-
     $(".alert-message").prepend(htmlAlert);
     $(".alert-message .alert").first().hide().fadeIn(200).delay(5000).fadeOut(1000, function () { $(this).remove(); });
 }
@@ -84,6 +82,21 @@ $("#info-close").click(function(){
     // placesPanel.style.visibility="visible";
     $('#right-information').hide();
     $('#right-panel').show();
+});
 
+function showModalAlert(title, msg) {
 
+    $('#msg-modal').find('h5').html(title).end().find('p').html(msg).end().modal('show');
+
+}
+
+/**
+ * Fix modal order
+ */
+$(document).on('show.bs.modal', '.modal', function () {
+    let zIndex = 1040 + (10 * $('.modal:visible').length);
+    $(this).css('z-index', zIndex);
+    setTimeout(function() {
+        $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+    }, 0);
 });

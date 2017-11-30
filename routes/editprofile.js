@@ -16,9 +16,11 @@ router.post('/', function(req, res, next){
         username: req.body.username
     }, function(err, user){
         if(user){ // if user name already existed
-            if (req.decoded.username == req.body.username){
+            if (req.decoded.username === req.body.username){
                 console.log("Same name");
-                return res.redirect('/');
+                return res.json({ success: false, msg: "Failed: Same name!" });
+
+                //return res.redirect('/');
             } else {
                 console.log("User existed");
                 res.json({ success: false, msg: "Failed: User existed" });
@@ -35,7 +37,16 @@ router.post('/', function(req, res, next){
                             res.status(400);
                             res.json({ success: false, msg: err });
                         }
-                        return res.redirect('/');
+                        // set a new token since username changed
+                        let payload = {
+                            admin: user.admin,
+                            username: user.username
+                        };
+                        let token = jwt.sign(payload, config.superSecret, {
+                            expiresIn: 8640000 // expires in 2400 hours
+                        });
+                        res.cookie('token', token);
+                        res.json({ success: true});
                     });
                 }
             });
