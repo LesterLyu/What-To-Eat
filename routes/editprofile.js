@@ -29,6 +29,14 @@ router.post('/', function(req, res, next){
                 if(user){
                     // edit current user's username
                     console.log("Editing current user's username");
+                    user.username = req.body.username;
+                    user.save(function (err) {
+                        if (err) {
+                            res.status(400);
+                            res.json({ success: false, msg: err });
+                        }
+                        return res.redirect('/');
+                    });
                 }
             });
         }
