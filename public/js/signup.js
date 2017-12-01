@@ -13,16 +13,22 @@ function signUp(){
     };
 
     $.ajax({
-        url:"/api/register",
-        type:"POST",
-        dataType:"text",
+        url: '/api/register',
+        method: "POST",
         contentType:"application/json; charset=utf-8",
         data: JSON.stringify(data),
-        success: function(response){
-            window.location='/';
-            $("html").html(response);
-        }, error: function (xhr){
-            alert(xhr.responseText);
+    }).done(function (response) {
+        if(response.success) {
+            window.location.href = '/';
         }
+    }).fail(function(xhr, status, error) {
+        console.log(xhr);
+        showModalAlert('SignUp Error', xhr.responseJSON.msg);
     });
+}
+
+
+function showModalAlert(title, msg) {
+    $('#msg-modal').find('h5').html(title).end().find('p').html(msg).end().modal('show');
+
 }

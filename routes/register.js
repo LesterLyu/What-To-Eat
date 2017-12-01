@@ -50,7 +50,7 @@ router.post('/', function(req, res, next) {
                 });
                 res.cookie('token', token);
 
-                res.redirect('/');
+                res.json({success: true});
                 // res.json({ success: true, msg: "Registration success"});
             });
 

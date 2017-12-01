@@ -22,13 +22,23 @@ function edit(){
 
 function deleteAccount() {
     let username = $("#usernameText").val();
-    showModalConfirm('Are you sure?', '??????????', 'deleteCallback');
+    showModalConfirm('Are you sure?', 'Your Account will no longer usable!', 'deleteCallback');
 
 }
 
 
 function deleteCallback() {
     $('#confirm-modal').modal('hide');
-
-    console.log("delete!");
+    $.ajax({
+        url: "/api/delete",
+        method: "DELETE",
+        contentType:"application/json; charset=utf-8",
+    }).done(function (data) {
+        if(data.success) {
+            location.reload();
+        }
+        else {
+            showModalAlert('Delete account' ,data.msg);
+        }
+    });
 }

@@ -12,16 +12,20 @@ function login(){
     };
 
     $.ajax({
-        url:'/api/authenticate',
-        type:"POST",
-        dataType:"text",
+        url: '/api/authenticate',
+        method: "POST",
         contentType:"application/json; charset=utf-8",
         data: JSON.stringify(data),
-        success: function(response){
-            window.location='/';
-            $("html").html(response);
-        }, error: function (xhr){
-            alert(xhr.responseText);
+    }).done(function (response) {
+        if(response.success) {
+            window.location.href = '/';
         }
+    }).fail(function(xhr, status, error) {
+        showModalAlert('Login Error', xhr.responseJSON.msg);
     });
+}
+
+function showModalAlert(title, msg) {
+    $('#msg-modal').find('h5').html(title).end().find('p').html(msg).end().modal('show');
+
 }

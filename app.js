@@ -20,6 +20,7 @@ let mongoose    = require('mongoose');
 let messagespost = require('./routes/messagepost');
 let search = require('./routes/search');
 let editprofile = require('./routes/editprofile');
+let deleteuser = require('./routes/delete');
 
 // Use promise from node.js
 mongoose.Promise = require('bluebird');
@@ -108,6 +109,9 @@ app.use('/api/user', user);
 
 // edit profile =======================================
 app.use('/api/editprofile', editprofile);
+
+// delete account
+app.use('/api/delete', deleteuser);
 
 app.use('/api/messages', messages);
 // catch 404 and forward to error handler
