@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
     /*res.send('Hi ' + req.decoded.username + ', Here are the unreaded messsages:');*/
     let document = [];
     User.find({username: req.decoded.username}, 'messages.msgid messages.is_read', function (err, docs) {
-        if (err) {
+        if (err || !docs[0]) {
             res.json({ success: false });
             return;
         }
