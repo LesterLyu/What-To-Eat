@@ -11,10 +11,10 @@ $('#filter-popover').popover({
         console.log('now');
         const checkbox = $(this);
         if (checkbox.is(':checked'))  {
-            $('.popover-content #hide-on-now').hide();
+            $('.popover-content #hide-on-now').slideUp();
         }
         else {
-            $('.popover-content #hide-on-now').show();
+            $('.popover-content #hide-on-now').slideDown();
         }
     });
 
