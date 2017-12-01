@@ -97,11 +97,15 @@ $("#info-close").click(function(){
 });
 
 function showModalAlert(title, msg) {
-
     $('#msg-modal').find('h5').html(title).end().find('p').html(msg).end().modal('show');
 
 }
 
+function showModalConfirm(title, msg, callback) {
+    $('#confirm-button').attr('onclick', callback + '()');
+    $('#confirm-modal').find('h5').html(title).end().find('p').html(msg).end().modal('show');
+
+}
 /**
  * Fix modal order
  */

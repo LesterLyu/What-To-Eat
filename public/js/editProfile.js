@@ -19,3 +19,16 @@ function edit(){
         }
     });
 }
+
+function deleteAccount() {
+    let username = $("#usernameText").val();
+    showModalConfirm('Are you sure?', '??????????', 'deleteCallback');
+
+}
+
+
+function deleteCallback() {
+    $('#confirm-modal').modal('hide');
+
+    console.log("delete!");
+}
