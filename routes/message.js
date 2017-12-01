@@ -73,7 +73,7 @@ router.get('/all', function(req, res, next) {
     let document = [];
     User.find({username: req.decoded.username}, 'messages.msgid',
         function (err, docs) {
-            if (err) {
+            if (err || !docs[0]) {
                 res.json({success: false, msg: err});
                 return;
             }
