@@ -102,4 +102,18 @@ router.get('/all', function(req, res, next) {
             })
     })
 });
+
+router.delete('/user/:id', function (req, res, next) {
+    let id = req.params.id;
+    User.findOneAndUpdate(
+        {username: req.decoded.username},
+        {$pull: {messages: {msgid: id}}},
+        function (err, raw) {
+            if(err)
+                res.json({success: false, err: err});
+            res.json({ success: true });
+            console.log('message with id ' + id + ' deleted successfully');
+        }
+    );
+});
 module.exports = router;
