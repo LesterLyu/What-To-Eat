@@ -67,4 +67,39 @@ router.put('/:id/readed', function (req, res, next){
         res.json({ success: true });
     })
 });
+
+router.get('/all', function(req, res, next) {
+    /*res.send('Hi ' + req.decoded.username + ', Here are the unreaded messsages:');*/
+    let document = [];
+    User.find({username: req.decoded.username}, 'messages.msgid messages.is_read', function (err, docs) {
+        if (err) {
+            res.json({ success: false, msg: err});
+        }
+
+        docs = docs[0].messages;
+        if(docs.length === 0) {
+            res.json({success: true, result: []});
+        }
+
+        let promises = [];
+        for(let i = 0; i < docs.length; i++) {
+            let datalist = {};
+            datalist['is_read'] = docs[i].is_read;
+            datalist['msgid'] = docs[i].msgid;
+            promises.push(
+                Messages.findById(docs[i].msgid, 'content', function (err, data) {
+                    if (err) {
+                        res.json({success: false, msg: err});
+                    }
+                    datalist['content'] = data.content;
+                    document.push(datalist);
+                }).exec()
+            );
+        }
+        Promise.all(promises)
+            .then(() => {
+                res.json({success: true, result: document});
+            })
+    })
+});
 module.exports = router;
