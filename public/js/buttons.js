@@ -57,7 +57,7 @@ setInterval(function() {
             });
         }
     });
-}, 5000);
+}, 3000);
 
 function showAlert(message) {
     let alertType = 'alert-info';
@@ -104,8 +104,59 @@ function showModalAlert(title, msg) {
 function showModalConfirm(title, msg, callback) {
     $('#confirm-button').attr('onclick', callback + '()');
     $('#confirm-modal').find('h5').html(title).end().find('p').html(msg).end().modal('show');
-
 }
+
+function showMessageList() {
+    getMessageHtml(function (html) {
+        $('#msg-list-body').html(html);
+        $('#msg-list-modal').modal('show');
+    });
+}
+
+function getMessageHtml(callback) {
+    let htmlData = '<ul class="list-group">';
+    $.getJSON( 'api/messages/all', {
+    }).done(function( data ) {
+        console.log(data);
+        if(data.success) {
+            for(let i = 0; i < data.result.length; i++) {
+                htmlData += '<li class="list-group-item row">\n' +
+                    '<div class="col-11">\n' +
+                    '    <i style="display: inline-flex;vertical-align: middle;" class="material-icons">' +
+                    'mail_outline</i> &nbsp;&nbsp;&nbsp;' + data.result[i].content +
+                    '</div>\n' +
+                    '<a href="#" class="col-1">' +
+                    '   <i style="display: inline-flex;vertical-align: middle;" onclick="deleteMessage(\'' +
+                    data.result[i].msgid + '\')" class="nounderline material-icons">delete</i>' +
+                    '   </a>\n' +
+                    '</li>\n';
+            }
+            htmlData += '</ul>';
+            callback(htmlData);
+            $('#msg-list-body').html(htmlData);
+        }
+        else {
+            showModalAlert('Error', data.msg);
+        }
+    });
+}
+
+function deleteMessage(msgid) {
+    $.ajax({
+        url: 'api/messages/user/' + msgid,
+        method: 'DELETE'
+    }).done(function( data ) {
+        if(!data.success) {
+            showModalAlert('Error', 'Cannot delete message.');
+        }
+        else {
+            getMessageHtml(function (html) {
+                $('#msg-list-body').html(html);
+            });
+        }
+    });
+}
+
 /**
  * Fix modal order
  */
