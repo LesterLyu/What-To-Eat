@@ -6,12 +6,23 @@ $('#filter-popover').popover({
     content: $("#popover-content").html(),
     html: true
 }).on('click', function () {
+    console.log('clicked');
+    $('.popover-content #checkbox-now').on('click', function(){
+        console.log('now');
+        const checkbox = $(this);
+        if (checkbox.is(':checked'))  {
+            $('.popover-content #hide-on-now').hide();
+        }
+        else {
+            $('.popover-content #hide-on-now').show();
+        }
+    });
+
     $("#search.btn.btn-info").click(function(){
         $(".loading").show();
         deleteMarkers();
         let targetlocation = myLocation.getPosition();
         $('#filter-popover').popover('hide');
-
         let fn = setInterval(function() {
             $.getJSON( 'api/search/status', {
             }).done(function( data ) {
@@ -20,14 +31,21 @@ $('#filter-popover').popover({
                 }
             });
         }, 300);
+        // now
+        let day = -1, hour = -1;
+        if(!$('.popover-content #checkbox-now').is(':checked')) {
+            day = $(".popover-content #day.form-control").val();
+            hour = $(".popover-content #hour.form-control").val();
+        }
 
         $.getJSON( 'api/search', {
             latitude: targetlocation.lat,
             longitude: targetlocation.lng,
             radius: $(".popover-content #radius.form-control").val(),
             workload: $(".popover-content #workload.form-control").val(),
-            day: $(".popover-content #day.form-control").val(),
-            hour: $(".popover-content #hour.form-control").val(),
+            day: day,
+            hour: hour,
+            price: $(".popover-content #price.form-control").val(),
         }) .done(function( data ) {
             //console.log(data);
             clearInterval(fn);
@@ -36,9 +54,6 @@ $('#filter-popover').popover({
             $('#right-panel').show();
             processSearch(data);
         });
-
-
-
 
     });
 });

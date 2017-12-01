@@ -30,7 +30,7 @@ function getStatus(sessionID) {
 
 
 /**
- * Main function
+ * Main search function
  * @param latitude Number
  * @param longitude Number
  * @param radius in meters
@@ -38,10 +38,13 @@ function getStatus(sessionID) {
  *                 Up to 45 mins, Up to 60 mins, ???
  * @param day
  * @param hour search hour
+ * @param price Pricing levels to filter the search result with: 1 = $, 2 = $$, 3 = $$$, 4 = $$$$.
+ *        The price filter can be a list of comma delimited pricing levels. For example, "1, 2, 3" will filter
+ *        the results to show the ones that are $, $$, or $$$.
  * @param callback
  * @param sessionID
  */
-function doFilter(latitude, longitude, radius, workload, day, hour, sessionID, callback) {
+function doFilter(latitude, longitude, radius, workload, day, hour, price, sessionID, callback) {
     let hasPopularity = 0;
     sessions[sessionID] = {
         number: 0,
@@ -59,7 +62,7 @@ function doFilter(latitude, longitude, radius, workload, day, hour, sessionID, c
     }
 
     // get all restaurants from yelp api, this will get up to 1000 results
-    yelp.search(latitude, longitude, categories, radius)
+    yelp.search(latitude, longitude, categories, radius, price)
         .then(results => {
             sessions[sessionID].size = results.length;
             sessions[sessionID].step++;
