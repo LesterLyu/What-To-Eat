@@ -15,6 +15,7 @@ const client = yelp.client(config.yelpAccessToken);
  * @returns Promise
  */
 function yelpBasicSearch(latitude, longitude, categories, radius, price, offset=0) {
+
     return client.search({
         latitude: latitude,
         longitude: longitude,
@@ -54,7 +55,7 @@ function yelpSearch(latitude, longitude, categories, radius, price) {
             size = body.total;
             for(let i = results.length; i < size - 50 && i - 50 < 1000; i += 50) {
                 promises.push(
-                    yelpBasicSearch(latitude, longitude, categories, radius, i)
+                    yelpBasicSearch(latitude, longitude, categories, radius, price, i)
                         .then(body => {
                             //console.log(body);
                             body.businesses.forEach(item => {
