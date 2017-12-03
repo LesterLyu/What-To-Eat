@@ -152,7 +152,7 @@ function getMessageHtml(callback) {
                     '<i style="display: inline-flex;vertical-align: middle;" class="material-icons">' +
                     'mail_outline</i></div>' +
                     '<div class="col-10">' +
-                    '<p class="word-wrap">&nbsp;&nbsp;&nbsp;' + data.result[i].content +
+                    '<p class="word-wrap">' + data.result[i].content +
                     '</p></div>\n' +
                     '<a href="#" class="col-xs-1">' +
                     '   <i style="display: inline-flex;vertical-align: middle;" onclick="deleteMessage(\'' +
