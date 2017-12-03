@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
-let Messages = require('../models/messages');
-let User = require('../models/user');
-/* POST messages listing. */
+const express = require('express');
+const router = express.Router();
+const Messages = require('../models/messages');
+const User = require('../models/user');
+/* POST add message. */
 
 router.post('/', function(req, res, next) {
     // create a sample message
@@ -29,7 +29,7 @@ router.post('/', function(req, res, next) {
             }
         );
         console.log(newMessage + '\nnew message posted successfully');
-        res.json({ success: true });
+        res.json({ success: true, newMessage: newMessage});
     });
 });
 module.exports = router;
