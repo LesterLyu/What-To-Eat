@@ -4,7 +4,7 @@ Used to collect a Token for a registered User.
 
 **URL** : `/api/search/`
 
-**Method** : `POST`
+**Method** : `GET`
 
 **Login required** : NO
 
@@ -17,19 +17,19 @@ Used to collect a Token for a registered User.
 | radius | Number      |  Search radius in meters. |
 | workload | Number      | 0 = No wait, 1 = Up to 15 mins, 2 = Up to 15 mins, 3 = Up to 30 mins, 4 = Up to 45 mins, 5 = Up to 60 mins, 10 = Greater than 60 mins.  |
 | day | Number      | **-1: current server day**, 0: Sun, 1: Mon, ... , 6: Sat. |
-| hour | Number      |  hour in 24, e.g. 10 = 10am, 22 = 10pm; **-1 = current server hour** |
+| hour | Number      |  hour in 24, e.g. 10 = 10am, 22 = 10pm; **-1 = current server hour**. |
 | price | String      | Pricing levels to filter the search result with: 1 = $, 2 = $$, 3 = $$$, 4 = $$$$. The price filter can be a list of comma delimited pricing levels. For example, "1, 2, 3" will filter the results to show the ones that are $, $$, or $$$. |
 
 
 **Query String Parameters example**
 
- - latitude:43.66569856044182
- - longitude:-79.34845447540283
- - radius:800
- - workload:2
- - day:-1
- - hour:13
- - price:2,1
+ - latitude: 43.66569856044182
+ - longitude: -79.34845447540283
+ - radius: 800
+ - workload: 2
+ - day: -1
+ - hour: 13
+ - price: 2,1
 
 ## Success Response
 

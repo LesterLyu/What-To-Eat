@@ -12,8 +12,8 @@ Open endpoints that does not require login
 * [Authenticate](user/authenticate.md) : `POST /api/authenticate/`
 
 #### Search related
-* [Search restaurant](search/search.md) : `POST /api/search/`
-* [Get current searching status](search/search-status.md) : `POST /api/search/status/`
+* [Search restaurant](search/search.md) : `GET /api/search/`
+* [Get current searching status](search/search-status.md) : `GET /api/search/status/`
 
 #### Messages related
 * [Post message](messages/message-post.md) : `POST /api/messages/`
