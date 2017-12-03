@@ -107,7 +107,7 @@ router.get('/all', function(req, res, next) {
 
 });
 
-router.delete('/:id', function (req, res, next) {
+router.delete('/user/:id', function (req, res, next) {
     let id = req.params.id;
     User.findOneAndUpdate(
         {username: req.decoded.username},
