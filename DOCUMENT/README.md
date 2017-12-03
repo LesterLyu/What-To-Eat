@@ -1,7 +1,7 @@
 # What To Eat Backend APIs
 
-#### BASE HTTP URL: `http://309.lesterlyu.com:3000`
-#### BASE HTTPS URL: `https://309.lesterlyu.com:8443`
+#### BASE HTTP URL: [`http://309.lesterlyu.com:3000`](http://309.lesterlyu.com:3000)
+#### BASE HTTPS URL: [`https://309.lesterlyu.com:8443`](https://309.lesterlyu.com:8443)
 
 ## Open Endpoints
 
@@ -16,7 +16,7 @@ Open endpoints that does not require login
 * [Get current searching status](search/search-status.md) : `POST /api/search/status/`
 
 #### Messages related
-* [Post message](messages/messages-post.md) : `POST /api/messages/`
+* [Post message](messages/message-post.md) : `POST /api/messages/`
 
 ## Endpoints that require Authentication
 
@@ -35,7 +35,7 @@ The cookie will be set after authenticate.
 Endpoints for basic account operations
 
 * [Logout](user/logout.md) : `GET /api/logout/` 
-* [Edit username](user/user-post.md) : `PUT /api/user/` 
+* [Edit username/email](user/user-post.md) : `PUT /api/user/` 
 
 ### Messages related
 
