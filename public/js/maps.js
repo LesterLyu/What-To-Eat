@@ -166,7 +166,7 @@ function createMarker2(place) {
 
 function createLists(places){
     var placesList = document.getElementById('places');
-    placesList.innerHTML = '';
+    //placesList.innerHTML = '';
     for (var i = 0; i < places.length; i++) {
         var place = places[i];
         var newli = createListItem(place);
@@ -177,29 +177,61 @@ function createLists(places){
 
 
 function createListItem(place){
-    var newli = document.createElement("div");
+    var newli = document.createElement("a");
+    newli.setAttribute("class","list-group-item");
+    newli.setAttribute("href","#");
     newli.setAttribute("id", "placeChild"); // added line
 
+    var imgdiv = document.createElement('div');
+    imgdiv.setAttribute("class", "media col-md-3");
+    var imgfig = document.createElement('figure');
+    imgfig.setAttribute("class", "pull-left");
+    imgfig.setAttribute("id", "icon");
     var img = document.createElement('img');
-    img.setAttribute("id", "icon");
+    img.setAttribute("id", "image");
     img.src = place.image_url;
-    newli.appendChild(img);
+    imgfig.appendChild(img);
+    imgdiv.appendChild(imgfig);
+    newli.appendChild(imgdiv);
+
+    var info = document.createElement('div');
+    info.setAttribute("class","col-md-6");
 
     var name = document.createElement('h6');
-    name.setAttribute("id", "name");
+    //name.setAttribute("id", "name");
+    name.setAttribute("class","list-group-item-heading");
     name.innerHTML = place.name;
-    newli.appendChild(name);
-
-    var rat = document.createElement('p');
-    rat.setAttribute("id", "rating");
-    rat.innerHTML = "Rating:" + place.rating;
-    newli.appendChild(rat);
+    info.appendChild(name);
 
     var vin = document.createElement('p');
-    vin.setAttribute("id", "vicinity");
-    vin.innerHTML = "Address:" + place.address[0];
-    newli.appendChild(vin);
-    newli.setAttribute("class","list-group-item");
+    vin.setAttribute("class","list-group-item-text");
+    //vin.setAttribute("id", "vicinity");
+    vin.innerHTML = place.address[0];
+    info.appendChild(vin);
+    newli.append(info);
+    var ratdiv = document.createElement('div');
+    ratdiv.setAttribute('class',"col-md-3 text-center");
+    var rat = document.createElement('well');
+    rat.setAttribute('class',"stars");
+
+
+    var i;
+    var star;
+    for(i = 0; i < place.rating; i++){
+        star = document.createElement('span');
+        star.setAttribute('class',"fa fa-star checked");
+        star.setAttribute("id", "rating");
+        rat.appendChild(star)
+    }
+    for(i = place.rating; i < 5; i++){
+        star = document.createElement('span');
+        star.setAttribute('class',"fa fa-star");
+        star.setAttribute("id", "rating");
+        rat.appendChild(star)
+    }
+    ratdiv.appendChild(rat);
+    newli.appendChild(ratdiv);
+
     //newli.setAttribute("onclick","placeDetail(\""+place+"\");");
     newli.setAttribute("onclick","placeDetail(\""+place.id+"\");");
     return newli;
