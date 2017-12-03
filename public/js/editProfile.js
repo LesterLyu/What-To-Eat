@@ -6,17 +6,16 @@ function edit(){
         "username": username
     };
     $.ajax({
-        url: "/api/editprofile",
-        method: "POST",
+        url: "/api/user",
+        method: "PUT",
         contentType:"application/json; charset=utf-8",
         data: JSON.stringify(data),
     }).done(function (data) {
         if(data.success) {
             location.reload();
         }
-        else {
-            showModalAlert('Modify profile' ,data.msg);
-        }
+    }).fail(function(xhr, status, error) {
+        showModalAlert('Modify profile' ,xhr.responseJSON.msg);
     });
 }
 
@@ -30,15 +29,14 @@ function deleteAccount() {
 function deleteCallback() {
     $('#confirm-modal').modal('hide');
     $.ajax({
-        url: "/api/delete",
+        url: "/api/user",
         method: "DELETE",
         contentType:"application/json; charset=utf-8",
     }).done(function (data) {
         if(data.success) {
             location.reload();
         }
-        else {
-            showModalAlert('Delete account' ,data.msg);
-        }
+    }).fail(function(xhr, status, error) {
+        showModalAlert('Delete account' ,xhr.responseJSON.msg);
     });
 }

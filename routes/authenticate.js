@@ -35,20 +35,10 @@ router.post('/', function(req, res, next) {
                     expiresIn: 8640000 // expires in 2400 hours
                 });
                 res.cookie('token', token);
-                // res.json({success: true});
-                //res.redirect('/');
                 res.json({success:true});
-                // res.json({
-                //     success: true,
-                //     msg: 'Enjoy your token!',
-                //     token: token
-                // });
             }
-
         }
-
     });
-
 });
 
 module.exports = router;

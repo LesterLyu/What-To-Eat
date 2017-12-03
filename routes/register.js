@@ -5,17 +5,16 @@ let User = require('../models/user'); // get our mongoose model
 
 let config = require('../config'); // get our config file
 
-/* GET users listing. */
+/* Create user */
 router.post('/', function(req, res, next) {
 
     console.log(req.body);
 
     if(!req.body.username || req.body.username === 'undefined') {
         res.status(400);
-        res.json({ success: false, msg: "Username?" });
+        res.json({ success: false, msg: "Username cannot be empty." });
         return;
     }
-
 
     // check existence
     User.findOne({
@@ -23,7 +22,7 @@ router.post('/', function(req, res, next) {
     }, function(err, user) {
         if (user) {
             res.status(400);
-            res.json({ success: false, msg: "User exists" });
+            res.json({ success: false, msg: "User exists." });
 
         }
         else{
@@ -37,7 +36,7 @@ router.post('/', function(req, res, next) {
 
             newUser.save(function(err) {
                 if (err) {
-                    res.status(400);
+                    res.status(500);
                     res.json({ success: false, msg: err });
                 }
                 // create a token
@@ -51,14 +50,10 @@ router.post('/', function(req, res, next) {
                 res.cookie('token', token);
 
                 res.json({success: true});
-                // res.json({ success: true, msg: "Registration success"});
             });
 
         }
     });
-
-
-
 });
 
 module.exports = router;

@@ -9,7 +9,6 @@ const session = require('express-session');
 
 let config = require('./config'); // get our config file
 let index = require('./routes/index');
-let users = require('./routes/users');
 let user = require('./routes/user');
 let register = require('./routes/register');
 let authenticate = require('./routes/authenticate');
@@ -19,8 +18,6 @@ let messages = require('./routes/message');
 let mongoose    = require('mongoose');
 let messagespost = require('./routes/messagepost');
 let search = require('./routes/search');
-let editprofile = require('./routes/editprofile');
-let deleteuser = require('./routes/delete');
 
 // Use promise from node.js
 mongoose.Promise = require('bluebird');
@@ -51,22 +48,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser(config.superSecret));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// open endpoint APIs
 app.use('/', index);
-app.use('/users', users);
 app.use('/api/messages', messagespost);
 app.use('/api/register', register);
 app.use('/api/authenticate', authenticate);
+app.use('/api/search', search);
 
 
-// login logout =======================================
+// pages
 app.use('/login', login);
-app.use('/logout', logout);
 app.get('/signup', function (req, res) {
     res.render('signup.html');
 });
-app.use('/verify', authenticate);
 // ====================================================
-app.use('/api/search', search);
 
 
 // ---------------------------------------------------------
@@ -104,14 +99,8 @@ app.use(function(req, res, next) {
 
 });
 
-
+app.use('/api/logout', logout);
 app.use('/api/user', user);
-
-// edit profile =======================================
-app.use('/api/editprofile', editprofile);
-
-// delete account
-app.use('/api/delete', deleteuser);
 
 app.use('/api/messages', messages);
 // catch 404 and forward to error handler

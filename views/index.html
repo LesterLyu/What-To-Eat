@@ -22,25 +22,6 @@
                     <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
 
-                <!--<li class="nav-item dropdown" style="margin-left: 0%">-->
-                <!--<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Profile</a>-->
-                <!--<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 39px, 0px); top: 0px; left: 0px; will-change: transform;">-->
-                <!--<a class="dropdown-item" href="#" data-toggle="modal" data-target="#basicModal">Edit Profile</a>-->
-                <!--<div class="dropdown-divider"></div>-->
-                <!--<a class="dropdown-item" href="#">Delete Account</a>-->
-                <!--</div>-->
-                <!--</li>-->
-
-                <!--<li class="nav-item">-->
-                <!--<a class="nav-link" href="#">Features</a>-->
-                <!--</li>-->
-                <!--<li class="nav-item">-->
-                <!--<a class="nav-link" href="#">Pricing</a>-->
-                <!--</li>-->
-                <!--<li class="nav-item">-->
-                <!--<a class="nav-link" href="#">About</a>-->
-                <!--</li>-->
-
             </ul>
             <ul class="nav navbar-nav ml-auto">
                 <% if(curUsername) {%>
@@ -54,11 +35,16 @@
                         <a class="dropdown-item" href="#" onclick="deleteAccount()">Delete Account</a>
                     </div>
                 </li>
-                <% } %>
+                <li class="nav-item">
+                    <a id="status" class="nav-link" href="#" onclick="logout()" >LOGOUT</a>
+                </li>
+                <% } else {%>
 
                 <li class="nav-item">
-                    <a id="status" class="nav-link" href=<%= href %>><%= status %></a>
+                    <a id="status" class="nav-link" href="/login" >LOGIN</a>
                 </li>
+
+                <% } %>
 
             </ul>
 

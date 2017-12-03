@@ -1,12 +1,10 @@
 
-
 // popovers
 $('#filter-popover').popover({
     animation: true,
     content: $("#popover-content").html(),
     html: true
 }).on('click', function () {
-    console.log('clicked');
     $('.popover-content #checkbox-now').on('click', function(){
         console.log('now');
         const checkbox = $(this);
@@ -57,6 +55,16 @@ $('#filter-popover').popover({
 
     });
 });
+
+function logout() {
+    $.ajax({
+        url: 'api/logout',
+        method: 'POST'
+    }).done(function( data ) {
+        // cannot fail
+        location.reload();
+    });
+}
 
 function updateMessages() {
     $.getJSON( 'api/messages', {

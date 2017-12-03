@@ -1,12 +1,12 @@
 /*  ======== User login =================  */
 function login(){
-    var username = $("#usernameText").val();
-    var password = $("#passwordText").val();
+    const username = $("#usernameText").val();
+    const password = $("#passwordText").val();
 
     console.log("verifying username: " + username);
     console.log("verifying password: " + password);
 
-    var data = {
+    const data = {
         "username": username,
         "password": password
     };

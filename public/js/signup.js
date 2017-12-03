@@ -1,11 +1,11 @@
 /*  ======== User login =================  */
 function signUp(){
-    var email = $("#emailText").val();
-    var username = $("#usernameText").val();
-    var password = $("#passwordText").val();
-    var admin = "false";
+    const email = $("#emailText").val();
+    const username = $("#usernameText").val();
+    const password = $("#passwordText").val();
+    const admin = false;
 
-    var data = {
+    const data = {
         "email": email,
         "username": username,
         "password": password,
