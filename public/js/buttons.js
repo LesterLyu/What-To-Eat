@@ -158,7 +158,7 @@ function getMessageHtml(callback) {
 
 function deleteMessage(msgid) {
     $.ajax({
-        url: 'api/messages/user/' + msgid,
+        url: 'api/messages/' + msgid,
         method: 'DELETE'
     }).done(function( data ) {
         if(!data.success) {

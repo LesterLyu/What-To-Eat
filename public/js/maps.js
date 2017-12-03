@@ -23,19 +23,26 @@ function get_estimated_location(callback) {
 function initMap() {
     console.log("init map");
 
+    const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    };
+
     if (navigator.geolocation) {
         console.log("supports location");
         navigator.geolocation.getCurrentPosition(function(position){
-            console.log("??");
-            var location = {
+            console.log(position);
+            const location = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
+
             loadMap(location);
 
-        }, showError);
+        }, showError, options);
     } else {
-        alert("Geolocation is not supported by this browser.");
+        alert("Geolocation is not supported by this browser or OS.");
     }
 }
 
@@ -64,6 +71,8 @@ function loadMap(location) {
  * @param error
  */
 function showError(error) {
+    console.log('Location error');
+    console.log(error);
     switch(error.code) {
         case error.PERMISSION_DENIED:
             console.log("User denied the request for Geolocation.");
