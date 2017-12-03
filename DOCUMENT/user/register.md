@@ -44,7 +44,7 @@ Used to register a User.
 
 ## Error Response
 
-**Condition** : If 'username' is occupied.
+**Condition** : If 'username' is undefined or occupied.
 
 **Code** : `400 BAD REQUEST`
 

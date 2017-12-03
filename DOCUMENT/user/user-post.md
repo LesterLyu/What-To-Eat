@@ -40,7 +40,7 @@ Edit username and email address
 
 ## Error Response
 
-**Condition** : System Error
+**Condition** : 'username' is occupied
 
 **Code** : `400 BAD REQUEST`
 

@@ -79,7 +79,7 @@ Used to collect a Token for a registered User.
 
 ## Error Response
 
-**Condition** : If 'username' and 'password' combination is wrong.
+**Condition** : Error on yelp api or google maps popular time crawler.
 
 **Code** : `400 BAD REQUEST`
 
