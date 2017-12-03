@@ -16,7 +16,8 @@ Open endpoints that does not require login
 * [Get current searching status](search/search-status.md) : `GET /api/search/status/`
 
 #### Messages related
-* [Post message](messages/message-post.md) : `POST /api/messages/`
+* [Post message (by instructor)](messages/message-post.md) : `POST /api/messages/`
+* [Delete message (by instructor)](messages/message-delete.md) : `DELETE /api/messages/`
 
 ## Endpoints that require Authentication
 
@@ -40,7 +41,9 @@ Endpoints for basic account operations
 ### Messages related
 
 * [Get message](messages/message-get.md) : `GET /api/messages/`
-* [Delete message](messages/message-delete.md) : `DELETE /api/messages/`
+* [Mark message readed](messages/message-readed.md) : `PUT /api/messages/:id/readed/`
+* [Delete message (by User)](messages/message-delete-user.md) : `DELETE /api/messages/user/`
+
 
 
 
