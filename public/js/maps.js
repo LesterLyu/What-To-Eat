@@ -57,6 +57,7 @@ function loadMap(location) {
         center: location,
         disableDefaultUI: true,
         zoomControl: true,
+        scaleControl: true,
     });
     service = new google.maps.places.PlacesService(current_map);
     infowindow = new google.maps.InfoWindow();
@@ -167,75 +168,39 @@ function createMarker2(place) {
 
 
 function createLists(places){
-    var placesList = document.getElementById('places');
-    //placesList.innerHTML = '';
-    for (var i = 0; i < places.length; i++) {
-        var place = places[i];
-        var newli = createListItem(place);
-        placesList.appendChild(newli);
-
+    let placesList = $('#places');
+    placesList.html('');
+    for (let i = 0; i < places.length; i++) {
+        let place = places[i];
+        let newli = createListItem(place);
+        placesList.append(newli);
     }
 }
 
 
 function createListItem(place){
-    var newli = document.createElement("a");
-    newli.setAttribute("class","list-group-item");
-    newli.setAttribute("href","#");
-    newli.setAttribute("id", "placeChild"); // added line
+    let newli = $('<a class="list-group-item" href="#" id="placeChild"> </a>');
+    newli.attr("onclick","placeDetail(\""+place.id+"\");");
 
-    var imgdiv = document.createElement('div');
-    imgdiv.setAttribute("class", "media col-md-3");
-    var imgfig = document.createElement('figure');
-    imgfig.setAttribute("class", "pull-left");
-    imgfig.setAttribute("id", "icon");
-    var img = document.createElement('img');
-    img.setAttribute("id", "image");
-    img.src = place.image_url;
-    imgfig.appendChild(img);
-    imgdiv.appendChild(imgfig);
-    newli.appendChild(imgdiv);
+    let imgdiv = $('<div class="media col-3"></div>');
+    let imgfig = $('<figure class="pull-left" id="icon"> </figure>');
 
-    var info = document.createElement('div');
-    info.setAttribute("class","col-md-6");
+    let img = $('<img id="image" src="'+ place.image_url +'"/>');
 
-    var name = document.createElement('h6');
-    //name.setAttribute("id", "name");
-    name.setAttribute("class","list-group-item-heading");
-    name.innerHTML = place.name;
-    info.appendChild(name);
+    imgfig.append(img);
+    imgdiv.append(imgfig);
+    newli.append(imgdiv);
+    let info = $('<div class="col-9"></div>');
+    let name = $('<h6 class="list-group-item-heading">' + place.name + '</h6>');
 
-    var vin = document.createElement('p');
-    vin.setAttribute("class","list-group-item-text");
-    //vin.setAttribute("id", "vicinity");
-    vin.innerHTML = place.address[0];
-    info.appendChild(vin);
+    info.append(name);
+
+    info.append($('<img id="rating-image" src="/yelp_stars/web_and_ios/extra_large/extra_large_'+ place.rating +'.png"/>').get());
+    let addr = $('<p class="list-group-item-text">' + place.address[0] + '</p>');
+
+    info.append(addr);
     newli.append(info);
-    var ratdiv = document.createElement('div');
-    ratdiv.setAttribute('class',"col-md-3 text-center");
-    var rat = document.createElement('well');
-    rat.setAttribute('class',"stars");
 
-
-    var i;
-    var star;
-    for(i = 0; i < place.rating; i++){
-        star = document.createElement('span');
-        star.setAttribute('class',"fa fa-star checked");
-        star.setAttribute("id", "rating");
-        rat.appendChild(star)
-    }
-    for(i = place.rating; i < 5; i++){
-        star = document.createElement('span');
-        star.setAttribute('class',"fa fa-star");
-        star.setAttribute("id", "rating");
-        rat.appendChild(star)
-    }
-    ratdiv.appendChild(rat);
-    newli.appendChild(ratdiv);
-
-    //newli.setAttribute("onclick","placeDetail(\""+place+"\");");
-    newli.setAttribute("onclick","placeDetail(\""+place.id+"\");");
     return newli;
 }
 

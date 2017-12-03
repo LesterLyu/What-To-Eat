@@ -36,10 +36,6 @@ nav {
     top: 0.5%;
 }
 
-#right-panel {
-    padding-left: 10px;
-}
-
 #right-panel select, #right-panel input {
     font-size: 15px;
 }
@@ -55,11 +51,10 @@ nav {
     display: none;
     font-family: Arial, Helvetica, sans-serif;
     position: absolute;
-    right: 5px;
-    top: 15%;
+    right: 0;
+    top: calc(94px + 43px + 12px); /* navbar hright + button height */
     margin-top: 0;
     height: 70%;
-    width: 70%;
     padding: 5px;
     z-index: 5;
     border: 1px solid #999;
@@ -130,6 +125,10 @@ p{
     height: 100%;
 }
 
+#rating-image {
+    height: 20px;
+}
+
 #right-information {
     display: none;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -150,7 +149,7 @@ p{
 
 
 #info-pic {
-    max-width: 100px;
+    max-width: 100%;
     height: auto;
 }
 
@@ -199,6 +198,8 @@ p{
     color: white;
 }
 
+
+
 @-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }
     100% { -webkit-transform: rotate(360deg); }
@@ -221,6 +222,11 @@ p{
 }
 
 .word-wrap{word-wrap: break-word;}
+
+#placeChild.list-group-item {
+    padding-left:0;
+    padding-right: 0;
+}
 
 /* Small devices */
 @media (max-width: 768px) {
