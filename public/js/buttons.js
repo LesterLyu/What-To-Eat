@@ -58,7 +58,7 @@ $('#filter-popover').popover({
     });
 });
 
-setInterval(function() {
+function updateMessages() {
     $.getJSON( 'api/messages', {
     }).done(function( data ) {
         //console.log(data);
@@ -72,7 +72,11 @@ setInterval(function() {
             });
         }
     });
-}, 3000);
+}
+if($('#status').html() !== 'LOGIN') {
+    setInterval(updateMessages, 3000);
+}
+
 
 function showAlert(message) {
     let alertType = 'alert-info';
