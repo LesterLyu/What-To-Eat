@@ -194,13 +194,13 @@ function createListItem(place){
     let name = $('<h6 class="list-group-item-heading">' + place.name + '</h6>');
 
     info.append(name);
-
-    info.append($('<img id="rating-image" src="/yelp_stars/web_and_ios/extra_large/extra_large_'+ place.rating +'.png"/>').get());
     let addr = $('<p class="list-group-item-text">' + place.address[0] + '</p>');
 
-    info.append(addr);
-    newli.append(info);
 
+    info.append($('<img id="rating-image" src="/yelp_stars/web_and_ios/extra_large/extra_large_'+ place.rating +'.png"/>').get());
+    info.append(addr);
+    info.append($('<p class="list-group-item-text">' + place.price + '</p>'));
+    newli.append(info);
     return newli;
 }
 
@@ -236,29 +236,12 @@ function popupDetail(placeId){
     document.getElementById('info-pic').setAttribute("src",place.image_url);
     document.getElementById('info-phone').innerHTML = "Phone:" + place.phone;
     document.getElementById('info-website').setAttribute("onclick"," window.open(\""+place.url+"\");");
-
-    // if(place.opening_hours == null){
-    //     document.getElementById('info-opening').setAttribute("class","btn btn-outline-secondary");
-    //     document.getElementById('info-opening').innerHTML = "NO HOURS";
-    // }else if(place.opening_hours.open_now){
-    //     document.getElementById('info-opening').innerHTML = "OPENING";
-    //     document.getElementById('info-opening').setAttribute("class","btn btn-outline-success");
-    // }else{
-    //     document.getElementById('info-opening').setAttribute("class","btn btn-outline-danger");
-    //     document.getElementById('info-opening').innerHTML = "CLOSED";
-    // }
-
-
-    $('#right-information').show();
-
-
-
-
+    $('#right-information').fadeIn('fast');
 }
 
 
 function closePanel(){
-    $('#right-panel').hide();
+    $("#right-panel").fadeOut( "fast");
 }
 
 function createMarker(place) {
