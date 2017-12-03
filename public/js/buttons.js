@@ -148,11 +148,13 @@ function getMessageHtml(callback) {
         if(data.success) {
             for(let i = 0; i < data.result.length; i++) {
                 htmlData += '<li class="list-group-item row">\n' +
-                    '<div class="col-11">\n' +
-                    '    <i style="display: inline-flex;vertical-align: middle;" class="material-icons">' +
-                    'mail_outline</i> &nbsp;&nbsp;&nbsp;' + data.result[i].content +
-                    '</div>\n' +
-                    '<a href="#" class="col-1">' +
+                    '<div class="col-sm-1 d-none d-sm-block"> ' +
+                    '<i style="display: inline-flex;vertical-align: middle;" class="material-icons">' +
+                    'mail_outline</i></div>' +
+                    '<div class="col-10">' +
+                    '<p class="word-wrap">&nbsp;&nbsp;&nbsp;' + data.result[i].content +
+                    '</p></div>\n' +
+                    '<a href="#" class="col-xs-1">' +
                     '   <i style="display: inline-flex;vertical-align: middle;" onclick="deleteMessage(\'' +
                     data.result[i].msgid + '\')" class="nounderline material-icons">delete</i>' +
                     '   </a>\n' +

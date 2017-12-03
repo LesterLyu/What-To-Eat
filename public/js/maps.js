@@ -54,7 +54,9 @@ function initMap() {
 function loadMap(location) {
     current_map = new google.maps.Map(document.getElementById('map'), {
         zoom: 15,
-        center: location
+        center: location,
+        disableDefaultUI: true,
+        zoomControl: true,
     });
     service = new google.maps.places.PlacesService(current_map);
     infowindow = new google.maps.InfoWindow();

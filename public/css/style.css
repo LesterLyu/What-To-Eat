@@ -220,10 +220,29 @@ p{
     width:100%;
 }
 
+.word-wrap{word-wrap: break-word;}
+
 /* Small devices */
 @media (max-width: 768px) {
     #alert-container {
         margin-top: 50px;
+    }
+    #filter-popover {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+    .popover {
+        left: -14px !important;
+        max-width:175px;
+    }
+}
+
+/* Extra Small devices */
+@media (max-width: 574px) {
+    .list-group-item {
+        padding-left:0;
+        padding-right:0;
     }
 }
 
