@@ -13,7 +13,7 @@ router.post('/', function(req, res, next) {
         const emailReg = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         return emailReg.test(email); }
 
-    if(!is_email(req.body.email)) {
+    if(!req.body.email || !is_email(req.body.email)) {
         res.status(400);
         res.json({ success: false, msg: "Failed: Email format error." });
         return;
