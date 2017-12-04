@@ -1,9 +1,11 @@
 function edit(){
-    var username = $("#usernameText").val();
+    const username = $("#usernameText").val();
+    const email = $("#emailText").val();
     console.log("Edited username is: "+username);
 
-    var data = {
-        "username": username
+    const data = {
+        username: username,
+        email: email
     };
     $.ajax({
         url: "/api/user",

@@ -17,49 +17,56 @@ router.delete('/', function (req, res, next) {
     });
 });
 
-/* EDIT username */
+/* EDIT username&email */
 router.put('/', function(req, res, next){
-    console.log("Editing profile");
-    console.log("Current Username is: " + req.decoded.username);
-    console.log("Edited Username is: " + req.body.username);
+    const newUsername = req.body.username;
+    const currUsername = req.decoded.username;
+
+    function is_email(email){
+        const emailReg = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        return emailReg.test(email); }
+
+    if(!is_email(req.body.email)) {
+        res.status(400);
+        res.json({ success: false, msg: "Failed: Email format error" });
+        return;
+    }
 
     // Find if edited username exist
     User.findOne({
         username: req.body.username
     }, function(err, user){
-        if(user){ // if user name already existed
-            if (req.decoded.username === req.body.username){
-                res.status(400);
-                res.json({ success: false, msg: "Failed: Same name!" });
-            } else {
-                res.status(400);
-                res.json({ success: false, msg: "Failed: User exists" });
-            }
-        } else { // edit username
-            // find current user
-            User.findOne({username: req.decoded.username}, function(err, user){
-                if(user){
-                    // edit current user's username
-                    user.username = req.body.username;
-                    user.save(function (err) {
-                        if (err) {
-                            res.status(500);
-                            res.json({ success: false, msg: err });
-                        }
-                        // set a new token since username changed
-                        let payload = {
-                            admin: user.admin,
-                            username: user.username
-                        };
-                        let token = jwt.sign(payload, config.superSecret, {
-                            expiresIn: 8640000 // expires in 2400 hours
-                        });
-                        res.cookie('token', token);
-                        res.json({ success: true});
-                    });
+        if(user && newUsername !== currUsername) {
+            res.status(400);
+            res.json({ success: false, msg: "Failed: User exists" });
+        }
+        // same username
+        if (newUsername === currUsername && req.body.email === user.email) {
+            res.status(400);
+            res.json({ success: false, msg: "Failed: No changes!" });
+        }
+        // save
+        else {
+            user.username = req.body.username;
+            user.email = req.body.email;
+            user.save(function (err) {
+                if (err) {
+                    res.status(500);
+                    res.json({ success: false, msg: err });
                 }
+                // set a new token since username changed
+                let payload = {
+                    admin: user.admin,
+                    username: user.username
+                };
+                let token = jwt.sign(payload, config.superSecret, {
+                    expiresIn: 8640000 // expires in 2400 hours
+                });
+                res.cookie('token', token);
+                res.json({ success: true});
             });
         }
+
     });
 });
 

@@ -40,7 +40,7 @@ Edit username and email address
 
 ## Error Response
 
-**Condition** : 'username' is occupied
+**Condition** : 'username' is occupied or email format error
 
 **Code** : `400 BAD REQUEST`
 
@@ -57,5 +57,12 @@ OR
 {
     "success":false,
     "msg": "Failed: User exists!"
+}
+```
+OR
+```json
+{
+    "success":false,
+    "msg": "Email format error."
 }
 ```

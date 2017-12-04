@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+let User = require('../models/user');
 let jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 let config = require('../config'); // get our config file
 
@@ -18,12 +19,19 @@ router.get('/', function(req, res, next) {
     });
 
     const username = req.decoded;
+    let email = '';
+
     if (!username || username === "undefined") {
-        res.render('index.html', { curUsername:""});
+        res.render('index.html', { curUsername:'',  email:''});
     } else{
         const curUserName = req.decoded.username;
-        console.log("current user name is: "+curUserName);
-        res.render('index.html', { curUsername:curUserName});
+        User.findOne({
+            username: curUserName
+        }, function(err, user){
+            if(user.email)
+                email = user.email;
+            res.render('index.html', { curUsername:curUserName, email: email});
+        });
     }
 });
 module.exports = router;

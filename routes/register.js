@@ -9,6 +9,15 @@ let config = require('../config'); // get our config file
 router.post('/', function(req, res, next) {
 
     console.log(req.body);
+    function is_email(email){
+        const emailReg = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        return emailReg.test(email); }
+
+    if(!is_email(req.body.email)) {
+        res.status(400);
+        res.json({ success: false, msg: "Failed: Email format error." });
+        return;
+    }
 
     if(!req.body.username || req.body.username === 'undefined') {
         res.status(400);

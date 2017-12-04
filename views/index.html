@@ -136,16 +136,20 @@
                     <h5 class="modal-title" id="myModalLabel">EDIT PROFILE</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="col-md-6">
+                    <form id="edit-profile-form" class="col-md-6">
                         <div class="form-group">
                             <label>Username</label>
-                            <input id="usernameText" name="username" class="form-control" value=<%= curUsername%>>
+                            <input id="usernameText" minlength="2" name="username" class="form-control" required value=<%= curUsername%>>
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input id="emailText" type="email" name="email" class="form-control" required value=<%= email%>>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                    <button href="#" class="btn btn-primary" onclick="edit()">Save changes</button>
+                    <button href="#" type="submit" class="btn btn-primary" onclick="edit()">Save changes</button>
                 </div>
             </div>
         </div>
@@ -260,13 +264,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
-
 <script src="js/maps.js"></script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhludYfs_Jkw9ZodxtxgDq9GKOl79tAuI&callback=initMap&libraries=places">
 </script>
 <script src="js/buttons.js"></script>
 <script src="js/editProfile.js"></script>
-
 
 </html>

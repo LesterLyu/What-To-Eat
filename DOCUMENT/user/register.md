@@ -63,3 +63,10 @@ OR
     "msg": "User exists."
 }
 ```
+OR
+```json
+{
+    "success":false,
+    "msg": "Email format error."
+}
+```
