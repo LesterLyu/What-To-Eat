@@ -25,7 +25,7 @@ function getStatus(sessionID) {
             curr: sessions[sessionID].number,
             msg: STATUS[sessions[sessionID].step]
         };
-    return {msg: STATUS[2]};
+    return {size:0, curr:0, msg: STATUS[2]};
 }
 
 
