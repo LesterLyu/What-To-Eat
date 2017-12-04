@@ -10,7 +10,8 @@ router.delete('/', function (req, res, next) {
     console.log(username);
     User.remove({username: username}, function (err) {
         if (err){
-            res.json({success: false})
+            res.status(400);
+            res.json({success: false, msg: err})
         }
         res.clearCookie("token", { path: '/' });
         res.json({success: true});

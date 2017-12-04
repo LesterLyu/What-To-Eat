@@ -19,7 +19,7 @@ Open endpoints that does not require login
 * [Post message (by instructor)](messages/message-post.md) : `POST /api/messages/`
 * [Delete message (by instructor)](messages/message-delete.md) : `DELETE /api/messages/:id`
 
-## Endpoints that require Authentication
+## Endpoints that require Authentication (Login)
 
 Closed endpoints require a valid Token cookie.
 The cookie will be set after authenticate.
@@ -37,6 +37,7 @@ Endpoints for basic account operations
 
 * [Logout](user/logout.md) : `GET /api/logout/` 
 * [Edit username/email](user/user-post.md) : `PUT /api/user/` 
+* [Delete account](user/user-delete.md) : `DELETE /api/user/` 
 
 ### Messages related
 
