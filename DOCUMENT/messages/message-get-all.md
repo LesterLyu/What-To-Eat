@@ -20,15 +20,15 @@ Used for a user to get his own collection of all messages, no matter if the mess
     "result": [
         {
             "_id": "5a1f5138f5775473e4b5bc95",
-            "content": "erweflknmweiofj2309rfomew0r2309rjkwef33f"
+            "data": "erweflknmweiofj2309rfomew0r2309rjkwef33f"
         },
         {
             "_id": "5a20a55d7394f85e5826ce15",
-            "content": "Hello"
+            "data": "Hello"
         },
         {
             "_id": "5a24814a980b555120c24906",
-            "content": "we are going to update"
+            "data": "we are going to update"
         }
     ]
 }
@@ -42,6 +42,6 @@ Used for a user to get his own collection of all messages, no matter if the mess
 
 ```json
 {
-    "success": false,
+    "success": false
 }
 ```

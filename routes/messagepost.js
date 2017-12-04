@@ -13,7 +13,7 @@ router.post('/', function(req, res, next) {
     dateString += newDate.getFullYear();
     let newMessage = new Messages({
         title: req.body.title,
-        content: req.body.content,
+        data: req.body.data,
         date: dateString,
     });
     newMessage.save(function(err) {

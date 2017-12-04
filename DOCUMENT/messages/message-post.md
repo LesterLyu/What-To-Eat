@@ -13,7 +13,7 @@ Used to collect a Token for a registered User.
 ```json
 {
     "title": "[title in plain text], OPTIONAL",
-    "content": "[content in plain text]"
+    "data": "[content in plain text], REQUIRED"
 }
 ```
 
@@ -22,7 +22,7 @@ Used to collect a Token for a registered User.
 ```json
 {
     "title": "update version",
-    "content": "we are going to update"
+    "data": "we are going to update"
 }
 ```
 
@@ -37,7 +37,7 @@ Used to collect a Token for a registered User.
     "success": true,
     "newMessage": {
         "title": "update version",
-        "content": "we are going to update",
+        "data": "we are going to update",
         "date": "12/3/2017",
         "_id": "5a24814a980b555120c24906"
     }

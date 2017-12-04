@@ -13,7 +13,7 @@ Used to collect a Token for a registered User.
     ```
 
 **URL example**
-```json
+```
 /api/messages/12345
 ```
 

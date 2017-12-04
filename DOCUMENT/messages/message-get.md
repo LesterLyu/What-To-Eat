@@ -20,11 +20,11 @@ Used for a user to get his own collection of unread messages
     "result": [
         {
             "_id": "5a1f5138f5775473e4b5bc95",
-            "content": "erweflknmweiofj2309rfomew0r2309rjkwef33f"
+            "data": "erweflknmweiofj2309rfomew0r2309rjkwef33f"
         },
         {
             "_id": "5a20a55d7394f85e5826ce15",
-            "content": "Hello"
+            "data": "Hello"
         }
     ]
 }
@@ -38,6 +38,6 @@ Used for a user to get his own collection of unread messages
 
 ```json
 {
-    "success": false,
+    "success": false
 }
 ```

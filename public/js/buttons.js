@@ -102,7 +102,7 @@ function updateMessages() {
     }).done(function( data ) {
         //console.log(data);
         for(let i = 0; i < data.result.length; i++) {
-            showAlert(data.result[i].content);
+            showAlert(data.result[i].data);
             $.ajax({
                 url: 'api/messages/' + data.result[i]._id + '/readed',
                 method: 'PUT'
@@ -119,7 +119,7 @@ if($('#status').html() !== 'LOGIN') {
 
 function showAlert(message) {
     let alertType = 'alert-info';
-    let htmlAlert = '<div class="alert col-sm-9 col-md-6 col-lg-4 '+ alertType +'"><h3>'+ 'New Message: ' + '</h3><BR><p>'+ message +'</p></div>';
+    let htmlAlert = '<div class="alert col-sm-9 col-md-6 col-lg-4 '+ alertType +'"><h3>'+ 'New Message: ' + '</h3><BR><p class="word-wrap">'+ message +'</p></div>';
     $(".alert-message").prepend(htmlAlert);
     $(".alert-message .alert").first().hide().fadeIn(200).delay(5000).fadeOut(1000, function () { $(this).remove(); });
 }
@@ -178,7 +178,7 @@ function getMessageHtml(callback) {
                     '<i style="display: inline-flex;vertical-align: middle;" class="material-icons">' +
                     'mail_outline</i></div>' +
                     '<div class="col-10">' +
-                    '<p class="word-wrap">' + data.result[i].content +
+                    '<p class="word-wrap">' + data.result[i].data +
                     '</p></div>\n' +
                     '<a href="#" class="col-xs-1">' +
                     '   <i style="display: inline-flex;vertical-align: middle;" onclick="deleteMessage(\'' +

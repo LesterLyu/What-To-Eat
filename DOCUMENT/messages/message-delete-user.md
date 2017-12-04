@@ -13,7 +13,7 @@ Used for a user to delete a message from his own collection of messages
     ```
 
 **URL example**
-```json
+```
 /api/messages/user/1234
 ```
 

@@ -42,7 +42,10 @@ function initMap() {
 
         }, showError, options);
     } else {
-        alert("Geolocation is not supported by this browser or OS.");
+        get_estimated_location(function(data){
+            loadMap(data.location);
+        });
+        console.log("Geolocation is not supported by this browser or OS.");
     }
 }
 

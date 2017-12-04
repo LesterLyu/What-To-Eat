@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
     User.find({username: req.decoded.username}, 'messages.msgid messages.is_read', function (err, docs) {
         if (err || !docs[0]) {
             res.status(400);
+            res.clearCookie("token", { path: '/' });
             res.json({ success: false });
             return;
         }
@@ -23,7 +24,7 @@ router.get('/', function(req, res, next) {
         for(let i = 0; i < docs.length; i++) {
             if(!docs[i].is_read) {
                 promises.push(
-                    Messages.findById(docs[i].msgid, 'content').exec().then(function (data) {
+                    Messages.findById(docs[i].msgid, 'data').exec().then(function (data) {
                         document.push(data);
                     })
                 );
@@ -70,8 +71,8 @@ router.get('/all', function(req, res, next) {
                 let datalist = {};
                 datalist['is_read'] = docs[i].is_read;
                 datalist['msgid'] = docs[i].msgid;
-                let p = Messages.findById(docs[i].msgid, 'content').exec().then(function(data) {
-                    datalist['content'] = data.content;
+                let p = Messages.findById(docs[i].msgid, 'data').exec().then(function(data) {
+                    datalist['data'] = data.data;
                     document.push(datalist);
                 });
                 promises.push(p);

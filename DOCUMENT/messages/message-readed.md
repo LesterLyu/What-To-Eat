@@ -15,7 +15,7 @@ Used to update the condition of is_read of a certain message for a user
     ```
 
 **URL example**
-```json
+```
 /api/messages/1234/readed
 ```
 
@@ -27,7 +27,7 @@ Used to update the condition of is_read of a certain message for a user
 
 ```json
 {
-    "success": true,
+    "success": true
 }
 ```
 
