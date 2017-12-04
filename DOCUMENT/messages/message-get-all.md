@@ -1,8 +1,8 @@
-# user get his own unread message
+# user get all messages
 
-Used for a user to get his own collection of unread messages
+Used for a user to get his own collection of all messages, no matter if the message is already read or unread.
 
-**URL** : `/api/messages`
+**URL** : `/api/messages/all`
 
 **Method** : `GET`
 
@@ -25,6 +25,10 @@ Used for a user to get his own collection of unread messages
         {
             "_id": "5a20a55d7394f85e5826ce15",
             "content": "Hello"
+        },
+        {
+            "_id": "5a24814a980b555120c24906",
+            "content": "we are going to update"
         }
     ]
 }

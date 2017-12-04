@@ -18,18 +18,43 @@ router.post('/', function(req, res, next) {
     });
     newMessage.save(function(err) {
         if (err) {
-            res.json({ success: false });
+            res.status(400);
+            res.json({ success: false, msg: err});
         }
         User.updateMany(
             {},
             {$push: {messages: {msgid: newMessage._id.toString(), is_read: false}}},
             function (err, raw) {
-                if(err)
-                    console.log(err);
+                if(err){
+                    res.status(400);
+                    res.json({ success: false, msg: err});
+                }
+
             }
         );
-        console.log(newMessage + '\nnew message posted successfully');
         res.json({ success: true, newMessage: newMessage});
+    });
+});
+
+router.delete('/:id', function (req, res, next) {
+    let id = req.params.id;
+    Messages.deleteOne({_id: id}, function (err) {
+        if (err){
+            res.status(400);
+            res.json({ success: false, msg: err});
+        }
+        User.updateMany(
+            {},
+            {$pull: {messages: {msgid: id}}},
+            function (err, raw) {
+                if(err){
+                    res.json({ success: false, msg: err});
+                    res.status(400);
+                }
+                res.json({ success: true, msg: 'message with id ' + id + ' deleted successfully'});
+            }
+        );
+
     });
 });
 module.exports = router;
