@@ -53,7 +53,6 @@ $('#filter-popover').popover({
         }) .done(function( data ) {
             //console.log(data);
             clearInterval(fn);
-            $('#loading-text').html('0%');
             $("#show-hide-button").fadeIn( "fast");
             $(".loading").fadeOut( "fast");
             $("#right-panel").fadeIn( "fast");

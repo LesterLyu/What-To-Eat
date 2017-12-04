@@ -55,9 +55,9 @@ function loadMap(location) {
     current_map = new google.maps.Map(document.getElementById('map'), {
         zoom: 15,
         center: location,
-        disableDefaultUI: true,
-        zoomControl: true,
-        scaleControl: true,
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: false
     });
     service = new google.maps.places.PlacesService(current_map);
     infowindow = new google.maps.InfoWindow();
