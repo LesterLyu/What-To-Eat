@@ -8,6 +8,7 @@ router.get('/', function(req, res, next) {
     let document = [];
     User.find({username: req.decoded.username}, 'messages.msgid messages.is_read', function (err, docs) {
         if (err || !docs[0]) {
+            res.status(400);
             res.json({ success: false });
             return;
         }
@@ -36,34 +37,13 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.delete('/:id', function (req, res, next) {
-    let id = req.params.id;
-    Messages.deleteOne({_id: id}, function (err) {
-        if (err){
-            console.log(err);
-        }
-        User.updateMany(
-            {},
-            {$pull: {messages: {msgid: id}}},
-            function (err, raw) {
-                if(err)
-                    console.log(err);
-                console.log(raw);
-                res.json({ success: true });
-                console.log('message with id ' + id + ' deleted successfully');
-            }
-        );
-
-    });
-});
-
 router.put('/:id/readed', function (req, res, next){
     let id = req.params.id;
     let usern = req.decoded.username;
     User.update({username: usern, 'messages.msgid': id}, {$set: {"messages.$.is_read": true}},
         function (err, raw) {
             if(err)
-                console.log(err);
+                res.json({ success: false, msg: err});
             res.json({ success: true });
         })
 });
@@ -113,10 +93,12 @@ router.delete('/user/:id', function (req, res, next) {
         {username: req.decoded.username},
         {$pull: {messages: {msgid: id}}},
         function (err, raw) {
-            if(err)
-                res.json({success: false, err: err});
-            res.json({ success: true });
-            console.log('message with id ' + id + ' deleted successfully');
+            if(err){
+                res.status(400);
+                res.json({success: false, msg: err});
+            }
+
+            res.json({ success: true, msg: 'message with id ' + id + ' deleted successfully'});
         }
     );
 });
