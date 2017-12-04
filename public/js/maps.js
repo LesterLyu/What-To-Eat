@@ -199,7 +199,9 @@ function createListItem(place){
 
     info.append($('<img id="rating-image" src="/yelp_stars/web_and_ios/extra_large/extra_large_'+ place.rating +'.png"/>').get());
     info.append(addr);
-    info.append($('<p class="list-group-item-text">' + place.price + '</p>'));
+    if(place.popularity[0] === 'None')
+        place.popularity[0] = '0 min';
+    info.append($('<p class="list-group-item-text">' + place.price + '\t&nbsp;wait time: ' + place.popularity[0] + '</p>'));
     newli.append(info);
     return newli;
 }
