@@ -17,7 +17,7 @@ Open endpoints that does not require login
 
 #### Messages related
 * [Post message (by instructor)](messages/message-post.md) : `POST /api/messages/`
-* [Delete message (by instructor)](messages/message-delete.md) : `DELETE /api/messages/`
+* [Delete message (by instructor)](messages/message-delete.md) : `DELETE /api/messages/:id`
 
 ## Endpoints that require Authentication
 
