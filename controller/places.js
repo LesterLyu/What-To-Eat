@@ -14,7 +14,7 @@ const workloads = {
 };
 const STATUS = ['Gathering data from Yelp...',
                 'Gathering data from Google...',
-                'Not running...'];
+                'You are not searching...'];
 
 let sessions = {};
 
@@ -25,7 +25,7 @@ function getStatus(sessionID) {
             curr: sessions[sessionID].number,
             msg: STATUS[sessions[sessionID].step]
         };
-    return {size:0, curr:0, msg: STATUS[2]};
+    return {size:-1, curr:0, msg: STATUS[2]};
 }
 
 
