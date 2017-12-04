@@ -32,7 +32,7 @@ nav {
 
 #map-buttons {
     position: absolute;
-    right: 1.75%;
+    right: 50px;
     top: 0.5%;
 }
 
@@ -54,25 +54,25 @@ nav {
     right: 0;
     top: calc(94px + 43px + 12px); /* navbar hright + button height */
     margin-top: 0;
-    height: 70%;
-    padding: 5px;
+    max-height: calc( 100% - (94px + 43px + 12px));
+    height: calc( 100% - (94px + 43px + 12px));
+    padding:0; !important;
     z-index: 5;
     border: 1px solid #999;
     background: #ffffff;
-
 }
 
 #places {
     list-style-type: none;
     padding: 0;
     margin:0;
-    height: 93%;
+    height: 100%;
     width: 100%;
     overflow-y: scroll;
 }
 
 #placeChild {
-    height: 80px;
+    height: 100px;
     width: 100%;
     text-overflow: clip;
     overflow: hidden;
@@ -119,6 +119,7 @@ p{
     height: 80px;
     overflow: hidden;
     text-align:center;
+    margin-bottom: 0;
 }
 #image{
     width: auto;
@@ -135,15 +136,17 @@ p{
     line-height: 30px;
     padding-left: 10px;
     position: absolute;
-    right: 5px;
-    top: 15%;
+    right: 0;
+    top: calc(94px + 43px + 12px); /* navbar hright + button height */
     margin-top: 0;
-    height: auto;
-    width: 30%;
+
+    max-height: calc( 100% - (94px + 43px + 12px));
     z-index: 5;
     border: 1px solid #999;
     background: #fff;
-
+    padding-top:10px;
+    padding-bottom: 10px;
+    overflow-y:scroll;
 }
 
 
@@ -151,12 +154,6 @@ p{
 #info-pic {
     max-width: 100%;
     height: auto;
-}
-
-#filter-popover {
-    position: absolute;
-    right: 50px;
-    margin-right: 10%
 }
 
 .loading {
@@ -228,14 +225,22 @@ p{
     padding-right: 0;
 }
 
+h6 {
+    text-transform: none; !important;
+}
+
+#show-hide-button {
+    display: none;
+}
+
 /* Small devices */
 @media (max-width: 768px) {
     #alert-container {
         margin-top: 50px;
     }
-    #filter-popover {
+    #map-buttons {
         position: absolute;
-        right: 10px;
+        right: 20px;
         top: 10px;
     }
     .popover {

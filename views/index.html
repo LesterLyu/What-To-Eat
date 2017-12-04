@@ -61,6 +61,7 @@
 
 
         <div id="map-buttons" class="justify-content-md-center">
+            <button id="show-hide-button" type="button" class="btn btn-info" onclick="hide()">Hide</button>
             <button id="filter-popover" type="button" class="btn btn-danger dropdown-toggle" data-toggle="popover" data-placement="bottom">Filter</button>
         </div>
 
@@ -216,31 +217,26 @@
     </div>
 
     <div id="right-panel" class="col-xs-10 col-sm-8 col-md-6 col-lg-5 col-xl-4">
-        <div class = "well" id="places">
+        <div id="places">
             <div class="list-group" >
 
             </div>
         </div>
-        <button id="close"  type="button" class="btn btn-outline-secondary">Close</button>
-        <!-- <button id="more">Next Page</button> -->
+            <!--<button id="close"  type="button" class="btn btn-outline-secondary">Close</button>-->
+
+
     </div>
 
 
-    <div id="right-information" class="col-xs-10 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+    <div id="right-information" class="container col-xs-10 col-sm-8 col-md-6 col-lg-5 col-xl-4">
         <h4 class = "card-header" id="info-name"></h4>
         <img id= "info-pic" alt = "Image Missing">
         <div class="card-block">
             <h6 class = "class-title" id = "info-address"></h6>
             <h7 class = "class-subtitle" id = "info-phone"></h7>
             <!--<button type="button" id="info-opening" class="btn btn-outline-success"></button>-->
-            <br>
-            <button type="button" id="info-website" class="btn btn-primary">Website</button>
-
+            <br><button type="button" id="info-website" class="btn btn-primary">Website</button>
         </div>
-
-
-
-        <!-- <button id="more">Next Page</button> -->
         <button id="info-close" class="btn btn-info">RETURN</button>
     </div>
 

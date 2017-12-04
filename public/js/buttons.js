@@ -5,6 +5,9 @@ $('#filter-popover').popover({
     content: $("#popover-content").html(),
     html: true
 }).on('click', function () {
+    let datetime = new Date();
+    $(".popover-content #day").val(datetime.getDay());
+    $(".popover-content #hour").val(datetime.getHours());
     $('.popover-content #checkbox-now').on('click', function(){
         console.log('now');
         const checkbox = $(this);
@@ -18,13 +21,16 @@ $('#filter-popover').popover({
 
     $("#search.btn.btn-info").click(function(){
         $(".loading").show();
+        $('#loading-text').html('0%');
         deleteMarkers();
         let targetlocation = myLocation.getPosition();
+        $("#right-panel").fadeOut( "fast");
+        $("#right-information").fadeOut( "fast");
         $('#filter-popover').popover('hide');
         let fn = setInterval(function() {
             $.getJSON( 'api/search/status', {
             }).done(function( data ) {
-                if(data.size !== -1) {
+                if(data.size !== 0) {
                     $('#loading-text').html((data.curr / data.size * 100).toFixed(0) + '%');
                 }
             });
@@ -47,14 +53,39 @@ $('#filter-popover').popover({
         }) .done(function( data ) {
             //console.log(data);
             clearInterval(fn);
-            $('#loading-text').html('0%');
-            $(".loading").hide();
-            $('#right-panel').show();
+            $("#show-hide-button").fadeIn( "fast");
+            $(".loading").fadeOut( "fast");
+            $("#right-panel").fadeIn( "fast");
             processSearch(data);
         });
 
     });
 });
+let lastScreen = '';
+
+function hide() {
+    const button = $('#show-hide-button');
+    const rightPanel = $('#right-panel');
+    const rightInfo = $('#right-information');
+    if(rightPanel.is(":visible")) {
+        button.html('SHOW');
+        lastScreen = 'panel';
+        rightPanel.fadeOut('fast');
+    }
+    else if(rightInfo.is(":visible")) {
+        button.html('SHOW');
+        lastScreen = 'info';
+        rightInfo.fadeOut('fast');
+    }
+    else if(lastScreen === 'panel'){
+        button.html('HIDE');
+        rightPanel.fadeIn('fast');
+    }
+    else if(lastScreen === 'info'){
+        button.html('HIDE');
+        rightInfo.fadeIn('fast');
+    }
+}
 
 function logout() {
     $.ajax({
@@ -101,16 +132,11 @@ $("#test").click(function showAlert() {
 
 
 
-let datetime = new Date();
-console.log('set date=' + datetime.getDay());
-$("#day").val(datetime.getDay());
-
-//search all restaurants near this location
 
 
 
 $("#close").click(function(){
-    $('#right-panel').hide();
+    $("#right-panel").fadeOut( "fast");
 
 });
 
@@ -119,8 +145,8 @@ $("#info-close").click(function(){
     // placesPanel.style.visibility="hidden";
     // var placesPanel = document.getElementById('right-panel');
     // placesPanel.style.visibility="visible";
-    $('#right-information').hide();
-    $('#right-panel').show();
+    $("#right-information").fadeOut( "fast");
+    $("#right-panel").fadeIn( "fast");
 });
 
 function showModalAlert(title, msg) {

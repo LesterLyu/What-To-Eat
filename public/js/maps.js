@@ -55,9 +55,9 @@ function loadMap(location) {
     current_map = new google.maps.Map(document.getElementById('map'), {
         zoom: 15,
         center: location,
-        disableDefaultUI: true,
-        zoomControl: true,
-        scaleControl: true,
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: false
     });
     service = new google.maps.places.PlacesService(current_map);
     infowindow = new google.maps.InfoWindow();
@@ -194,13 +194,15 @@ function createListItem(place){
     let name = $('<h6 class="list-group-item-heading">' + place.name + '</h6>');
 
     info.append(name);
-
-    info.append($('<img id="rating-image" src="/yelp_stars/web_and_ios/extra_large/extra_large_'+ place.rating +'.png"/>').get());
     let addr = $('<p class="list-group-item-text">' + place.address[0] + '</p>');
 
-    info.append(addr);
-    newli.append(info);
 
+    info.append($('<img id="rating-image" src="/yelp_stars/web_and_ios/extra_large/extra_large_'+ place.rating +'.png"/>').get());
+    info.append(addr);
+    if(place.popularity[0] === 'None')
+        place.popularity[0] = '0 min';
+    info.append($('<p class="list-group-item-text">' + place.price + '\t&nbsp;wait time: ' + place.popularity[0] + '</p>'));
+    newli.append(info);
     return newli;
 }
 
@@ -236,29 +238,12 @@ function popupDetail(placeId){
     document.getElementById('info-pic').setAttribute("src",place.image_url);
     document.getElementById('info-phone').innerHTML = "Phone:" + place.phone;
     document.getElementById('info-website').setAttribute("onclick"," window.open(\""+place.url+"\");");
-
-    // if(place.opening_hours == null){
-    //     document.getElementById('info-opening').setAttribute("class","btn btn-outline-secondary");
-    //     document.getElementById('info-opening').innerHTML = "NO HOURS";
-    // }else if(place.opening_hours.open_now){
-    //     document.getElementById('info-opening').innerHTML = "OPENING";
-    //     document.getElementById('info-opening').setAttribute("class","btn btn-outline-success");
-    // }else{
-    //     document.getElementById('info-opening').setAttribute("class","btn btn-outline-danger");
-    //     document.getElementById('info-opening').innerHTML = "CLOSED";
-    // }
-
-
-    $('#right-information').show();
-
-
-
-
+    $('#right-information').fadeIn('fast');
 }
 
 
 function closePanel(){
-    $('#right-panel').hide();
+    $("#right-panel").fadeOut( "fast");
 }
 
 function createMarker(place) {
