@@ -1,4 +1,4 @@
-# when the user read a message, it will update in the database
+# When the user read a message, it will update in the database
 
 Used to update the condition of is_read of a certain message for a user
 
@@ -11,7 +11,7 @@ Used to update the condition of is_read of a certain message for a user
 **URL Params**：
     Required :
     ```
-        id=[integer]
+        id=[string]
     ```
 
 **URL example**

@@ -1,4 +1,4 @@
-# user delete its own message
+# User delete its own message
 
 Used for a user to delete a message from his own collection of messages
 
@@ -9,7 +9,7 @@ Used for a user to delete a message from his own collection of messages
 **URL Params**：
     Required :
     ```
-        id=[integer]
+        id=[string]
     ```
 
 **URL example**
@@ -28,7 +28,7 @@ Used for a user to delete a message from his own collection of messages
 ```json
 {
     "success": true
-    "msg": 'message with id 1234 deleted successfully'
+    "msg": "message with id 1234 deleted successfully"
 }
 ```
 
@@ -40,7 +40,7 @@ Used for a user to delete a message from his own collection of messages
 
 ```json
 {
-    "success": false,
-    "msg": "Error message..."
+    "success" : false,
+    "msg" : "Error message..."
 }
 ```

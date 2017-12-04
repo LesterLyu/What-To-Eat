@@ -1,4 +1,4 @@
-# post a message
+# Post a message
 
 Used to collect a Token for a registered User.
 
@@ -12,8 +12,8 @@ Used to collect a Token for a registered User.
 
 ```json
 {
-    "title": "[username in plain text]",
-    "content": "[password in plain text]"
+    "title": "[title in plain text], OPTIONAL",
+    "content": "[content in plain text]"
 }
 ```
 

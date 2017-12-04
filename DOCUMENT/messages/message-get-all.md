@@ -1,4 +1,4 @@
-# user get all messages
+# User get all messages
 
 Used for a user to get his own collection of all messages, no matter if the message is already read or unread.
 

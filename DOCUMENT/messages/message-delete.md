@@ -1,4 +1,4 @@
-# admin delete a message
+# Admin delete a message
 
 Used to collect a Token for a registered User.
 

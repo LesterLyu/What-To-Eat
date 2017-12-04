@@ -40,7 +40,8 @@ Endpoints for basic account operations
 
 ### Messages related
 
-* [Get message](messages/message-get.md) : `GET /api/messages/`
+* [Get unreadmessage](messages/message-get.md) : `GET /api/messages/`
+* [Get all message](messages/message-get-all.md) : `GET /api/messages/all`
 * [Mark message readed](messages/message-readed.md) : `PUT /api/messages/:id/readed/`
 * [Delete message (by User)](messages/message-delete-user.md) : `DELETE /api/messages/user/`
 
