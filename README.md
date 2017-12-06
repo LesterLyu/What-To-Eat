@@ -5,3 +5,7 @@
 
 ## [Solutions.md](Solutions.md)
 ## [API Document](DOCUMENT/README.md)
+## CURL on message POST
+```
+curl -XPOST  https://309.lesterlyu.com:8443/api/messages --data '{"data": "message here"}' -H "Content-Type:application/json"
+```
