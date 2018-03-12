@@ -48,24 +48,27 @@ router.put('/', function(req, res, next){
         }
         // save
         else {
-            user.username = req.body.username;
-            user.email = req.body.email;
-            user.save(function (err) {
-                if (err) {
-                    res.status(500);
-                    res.json({ success: false, msg: err });
-                }
-                // set a new token since username changed
-                let payload = {
-                    admin: user.admin,
-                    username: user.username
-                };
-                let token = jwt.sign(payload, config.superSecret, {
-                    expiresIn: 8640000 // expires in 2400 hours
+            User.findOne({username: req.decoded.username}, function(err, user){
+                user.username = req.body.username;
+                user.email = req.body.email;
+                user.save(function (err) {
+                    if (err) {
+                        res.status(500);
+                        res.json({ success: false, msg: err });
+                    }
+                    // set a new token since username changed
+                    let payload = {
+                        admin: user.admin,
+                        username: user.username
+                    };
+                    let token = jwt.sign(payload, config.superSecret, {
+                        expiresIn: 8640000 // expires in 2400 hours
+                    });
+                    res.cookie('token', token);
+                    res.json({ success: true});
                 });
-                res.cookie('token', token);
-                res.json({ success: true});
             });
+
         }
 
     });
