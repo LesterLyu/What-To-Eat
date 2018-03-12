@@ -1,4 +1,5 @@
 # What To Eat
+Search nearby restaurants with waiting time filter.
 
 ## URL: [`http://309.lesterlyu.com`](http://309.lesterlyu.com)
 
